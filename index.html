@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>디지털 인문학 미래 예측</title>
+    <style>
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        #container { text-align: center; z-index: 1; }
+
+        h1 {
+            font-size: 3rem; margin-bottom: 2rem; color: #333;
+            transition: opacity 0.5s;
+        }
+
+        /* 시작 버튼 */
+        #start-btn {
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            /* 애니메이션 속도 및 방식 설정 */
+            transition: transform 1.5s cubic-bezier(0.7, 0, 0.3, 1), 
+                        border-radius 0.5s, 
+                        opacity 0.5s;
+            z-index: 10;
+            outline: none;
+        }
+
+        /* [핵심] 버튼이 확장될 때 적용되는 클래스 */
+        #start-btn.expand {
+            transform: scale(200); /* 더 확실하게 덮도록 수치 증가 */
+            border-radius: 0;
+            pointer-events: none; /* 클릭 방지 */
+        }
+
+        #display-overlay {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center; color: white;
+            z-index: 20; width: 80%;
+        }
+
+        #intro-text { font-size: 2rem; line-height: 1.5; }
+
+        .btn-group {
+            margin-top: 30px; display: flex; justify-content: center;
+            gap: 20px; opacity: 0; transition: opacity 1s;
+        }
+
+        .category-btn {
+            padding: 15px 40px; font-size: 1.2rem;
+            background: transparent; color: white;
+            border: 1px solid white; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>디지털 인문학을 통한 미래 예측</h1>
+        <button id="start-btn">시작하기</button>
+    </div>
+
+    <div id="display-overlay">
+        <div id="intro-text"></div>
+        <div id="btn-group" class="btn-group">
+            <button class="category-btn" onclick="selectCategory('도시')">도시</button>
+            <button class="category-btn" onclick="selectCategory('가정')">가정</button>
+            <button class="category-btn" onclick="selectCategory('학교')">학교</button>
+        </div>
+    </div>
+
+    <script>
+        const startBtn = document.getElementById('start-btn');
+        const title = document.querySelector('h1');
+        const introText = document.getElementById('intro-text');
+        const btnGroup = document.getElementById('btn-group');
+
+        // 사운드 설정 (경로 확인 필수!)
+        const typeSound = new Audio('./assets/sounds/typewriter-key-1.mp3');
+
+        startBtn.addEventListener('click', () => {
+            // 1. 애니메이션 시작 전 버튼 크기를 현재 상태로 고정 (글자 사라질 때 튕김 방지)
+            const rect = startBtn.getBoundingClientRect();
+            startBtn.style.width = rect.width + 'px';
+            startBtn.style.height = rect.height + 'px';
+
+            // 2. UI 숨기기 및 버튼 확장
+            title.style.opacity = '0';
+            startBtn.innerText = ""; 
+            
+            // 약간의 시차를 두어 클래스를 추가해야 애니메이션이 확실히 작동합니다.
+            setTimeout(() => {
+                startBtn.classList.add('expand');
+            }, 10);
+
+            // 3. 화면이 완전히 검게 변한 후 텍스트 출력
+            setTimeout(() => {
+                typeWriter("당신은 현대의 모습을 바꿀 수 있는 능력이 있습니다.", () => {
+                    setTimeout(showSecondQuestion, 1500);
+                });
+            }, 1500);
+        }, { once: true });
+
+        function typeWriter(text, callback) {
+            introText.innerHTML = "";
+            let i = 0;
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    introText.innerHTML += text[i];
+                    
+                    // 사운드 재생 (에러 방지 처리)
+                    try {
+                        typeSound.currentTime = 0;
+                        typeSound.play().catch(() => {}); // 사운드 파일 없을 시 무시
+                    } catch(e) {}
+                    
+                    i++;
+                } else {
+                    clearInterval(timer);
+                    if (callback) callback();
+                }
+            }, 200); // 타이핑 속도 조절
+        }
+
+        function showSecondQuestion() {
+            introText.style.transition = "opacity 0.5s";
+            introText.style.opacity = "0";
+            setTimeout(() => {
+                introText.style.opacity = "1";
+                typeWriter("어떤 현대의 모습을 보겠습니까?", () => {
+                    btnGroup.style.opacity = "1";
+                });
+            }, 600);
+        }
+
+        function selectCategory(name) {
+            alert(name + " 카테고리를 선택하셨습니다.");
+        }
+    </script>
+</body>
+</html>
