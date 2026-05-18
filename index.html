@@ -1,155 +1,703 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>디지털 인문학 미래 예측</title>
-    <style>
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: white;
-            font-family: 'Pretendard', sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>디지털 인문학 미래 예측</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --accent: #111111;
+      --panel: rgba(255, 255, 255, 0.08);
+      --line: rgba(255, 255, 255, 0.25);
+      --ease: cubic-bezier(0.7, 0, 0.3, 1);
+    }
 
-        #container { text-align: center; z-index: 1; }
+    * { box-sizing: border-box; }
 
-        h1 {
-            font-size: 3rem; margin-bottom: 2rem; color: #333;
-            transition: opacity 0.5s;
-        }
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: Pretendard, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+    }
 
-        /* 시작 버튼 */
-        #start-btn {
-            padding: 20px 50px;
-            font-size: 1.5rem;
-            background-color: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            /* 애니메이션 속도 및 방식 설정 */
-            transition: transform 1.5s cubic-bezier(0.7, 0, 0.3, 1), 
-                        border-radius 0.5s, 
-                        opacity 0.5s;
-            z-index: 10;
-            outline: none;
-        }
+    body {
+      display: grid;
+      place-items: center;
+      transition: background 900ms var(--ease), color 500ms ease;
+    }
 
-        /* [핵심] 버튼이 확장될 때 적용되는 클래스 */
-        #start-btn.expand {
-            transform: scale(200); /* 더 확실하게 덮도록 수치 증가 */
-            border-radius: 0;
-            pointer-events: none; /* 클릭 방지 */
-        }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: 0;
+    }
 
-        #display-overlay {
-            position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center; color: white;
-            z-index: 20; width: 80%;
-        }
+    .hidden {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translateY(16px) scale(0.98) !important;
+    }
 
-        #intro-text { font-size: 2rem; line-height: 1.5; }
+    .app {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
 
-        .btn-group {
-            margin-top: 30px; display: flex; justify-content: center;
-            gap: 20px; opacity: 0; transition: opacity 1s;
-        }
+    .home {
+      position: relative;
+      z-index: 3;
+      width: min(92vw, 920px);
+      text-align: center;
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
 
-        .category-btn {
-            padding: 15px 40px; font-size: 1.2rem;
-            background: transparent; color: white;
-            border: 1px solid white; cursor: pointer;
-        }
-    </style>
-</head>
+    .home h1 {
+      margin: 0 0 36px;
+      font-size: clamp(2.4rem, 8vw, 6.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      word-break: keep-all;
+    }
+
+    .start-btn {
+      min-width: 168px;
+      min-height: 68px;
+      padding: 18px 44px;
+      border-radius: 999px;
+      background: #000;
+      color: #fff;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      transition: transform 1500ms var(--ease), border-radius 800ms var(--ease), opacity 500ms ease;
+      will-change: transform;
+    }
+
+    .start-btn.expand {
+      transform: scale(90);
+      border-radius: 0;
+      pointer-events: none;
+    }
+
+    .stage {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      padding: 40px 24px;
+      color: #fff;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .stage.active { pointer-events: auto; }
+
+    .text-box {
+      width: min(92vw, 980px);
+      min-height: 1.4em;
+      font-size: clamp(1.8rem, 4.2vw, 4.2rem);
+      line-height: 1.35;
+      font-weight: 750;
+      letter-spacing: -0.04em;
+      word-break: keep-all;
+      white-space: pre-line;
+      text-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .sub-text {
+      margin-top: 18px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: clamp(0.98rem, 1.8vw, 1.25rem);
+      line-height: 1.7;
+      word-break: keep-all;
+      white-space: pre-line;
+    }
+
+    .choice-row,
+    .answer-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .choice-btn,
+    .answer-btn {
+      min-width: 138px;
+      padding: 16px 28px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      transition: opacity 500ms ease, transform 500ms ease, background 300ms ease, border-color 300ms ease;
+    }
+
+    .choice-btn:hover,
+    .answer-btn:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .current-image,
+    .future-image {
+      width: min(88vw, 900px);
+      height: min(46vh, 420px);
+      margin: 0 auto 28px;
+      border-radius: 28px;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .future-list {
+      position: fixed;
+      inset: 0;
+      z-index: 8;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: clamp(18px, 3vw, 36px);
+      align-items: center;
+      padding: clamp(22px, 4vw, 58px);
+      color: #fff;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .future-list.active {
+      pointer-events: auto;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .future-title {
+      width: min(1100px, 94vw);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .future-title h2 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 5vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+    }
+
+    .future-title p {
+      margin: 0 auto;
+      max-width: 720px;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: clamp(1rem, 1.6vw, 1.16rem);
+      line-height: 1.65;
+      word-break: keep-all;
+    }
+
+    /* 영화 선택 버튼: 세로로 길쭉한 스틸컷 카드 */
+    .future-buttons {
+      width: min(1180px, 94vw);
+      height: min(62vh, 620px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr));
+      gap: clamp(12px, 1.7vw, 24px);
+      align-items: stretch;
+      perspective: 1200px;
+    }
+
+    .future-btn {
+      --item-color: #555;
+      position: relative;
+      height: 100%;
+      min-height: 430px;
+      padding: 0;
+      overflow: hidden;
+      border: 2px solid color-mix(in srgb, var(--item-color), #ffffff 18%);
+      border-radius: 30px;
+      text-align: left;
+      color: #fff;
+      background:
+        linear-gradient(180deg,
+          color-mix(in srgb, var(--item-color), #ffffff 16%) 0%,
+          color-mix(in srgb, var(--item-color), #000000 34%) 48%,
+          #050505 100%);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.42),
+        0 0 34px color-mix(in srgb, var(--item-color), transparent 58%);
+      transition:
+        transform 480ms var(--ease),
+        border-color 300ms ease,
+        box-shadow 300ms ease,
+        filter 300ms ease;
+    }
+
+    .future-btn::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 22px;
+      background-image:
+        linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 48%, rgba(0, 0, 0, 0.82) 100%),
+        var(--thumb),
+        linear-gradient(135deg, var(--item-color), #111);
+      background-size: cover;
+      background-position: center;
+      transform: scale(1);
+      transition: transform 520ms var(--ease), filter 300ms ease;
+    }
+
+    .future-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background:
+        linear-gradient(90deg, color-mix(in srgb, var(--item-color), transparent 20%), transparent 26%, transparent 74%, color-mix(in srgb, var(--item-color), transparent 20%)),
+        radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--item-color), transparent 28%), transparent 46%);
+      mix-blend-mode: screen;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .future-btn:hover,
+    .future-btn:focus-visible {
+      transform: translateY(-18px) scale(1.08);
+      border-color: color-mix(in srgb, var(--item-color), #ffffff 45%);
+      box-shadow:
+        0 36px 90px rgba(0, 0, 0, 0.56),
+        0 0 70px color-mix(in srgb, var(--item-color), transparent 34%);
+      z-index: 3;
+      filter: saturate(1.08) contrast(1.04);
+    }
+
+    .future-btn:hover::before,
+    .future-btn:focus-visible::before {
+      transform: scale(1.16);
+      filter: saturate(1.25) contrast(1.08);
+    }
+
+    .future-btn strong,
+    .future-btn span {
+      position: absolute;
+      z-index: 2;
+      left: 24px;
+      right: 24px;
+      display: block;
+      text-shadow: 0 8px 26px rgba(0, 0, 0, 0.8);
+      word-break: keep-all;
+    }
+
+    .future-btn strong {
+      bottom: 82px;
+      font-size: clamp(1.25rem, 2vw, 1.85rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .future-btn span {
+      bottom: 28px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: clamp(0.84rem, 1.2vw, 1rem);
+      line-height: 1.42;
+    }
+
+    @media (max-width: 980px) {
+      .future-list {
+        overflow-y: auto;
+        align-content: start;
+      }
+
+      .future-buttons {
+        height: auto;
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
+      }
+
+      .future-btn {
+        min-height: 380px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .future-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .future-btn {
+        min-height: 360px;
+      }
+    }
+
+    .flash-image {
+      position: fixed;
+      inset: 50% auto auto 50%;
+      z-index: 20;
+      width: 180px;
+      height: 120px;
+      border-radius: 22px;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.2);
+      pointer-events: none;
+      box-shadow: 0 0 0 999vmax rgba(0, 0, 0, 0);
+    }
+
+    .flash-image.active {
+      animation: coverScreen 1100ms var(--ease) forwards;
+    }
+
+    @keyframes coverScreen {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); border-radius: 22px; }
+      20% { opacity: 1; }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(14); border-radius: 0; }
+    }
+
+    .closing-mask {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: #000;
+      transform: scale(1);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .closing-mask.active {
+      opacity: 1;
+      animation: shrinkBlack 1700ms var(--ease) 3200ms forwards;
+    }
+
+    @keyframes shrinkBlack {
+      to { transform: scale(0); border-radius: 999px; }
+    }
+  </style>
+<script type="text/javascript" nonce="cc4dfa435f714ed98f1ac0fddba" src="//local.adguard.org?ts=1779079953697&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000ed74720691429002a6bf43b3%26ts%3D494189%26p%3Dfs%26cid%3D1%26sig%3D25cdc5ec054638a4a461da560482d3983fdef108d51986d3ecab672c00c5481c%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="cc4dfa435f714ed98f1ac0fddba" src="//local.adguard.org?ts=1779079953697&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;name=Web%20of%20Trust&amp;type=user-script"></script></head>
 <body>
+  <main class="app" aria-live="polite">
+    <section id="home" class="home">
+      <h1>디지털 인문학을 통한<br />미래 예측</h1>
+      <button id="startBtn" class="start-btn" type="button">시작하기</button>
+    </section>
 
-    <div id="container">
-        <h1>디지털 인문학을 통한 미래 예측</h1>
-        <button id="start-btn">시작하기</button>
-    </div>
+    <section id="stage" class="stage" aria-hidden="true">
+      <div>
+        <div id="currentImage" class="current-image hidden"></div>
+        <div id="textBox" class="text-box"></div>
+        <div id="subText" class="sub-text"></div>
+        <div id="choiceRow" class="choice-row"></div>
+        <div id="answerRow" class="answer-row"></div>
+      </div>
+    </section>
 
-    <div id="display-overlay">
-        <div id="intro-text"></div>
-        <div id="btn-group" class="btn-group">
-            <button class="category-btn" onclick="selectCategory('도시')">도시</button>
-            <button class="category-btn" onclick="selectCategory('가정')">가정</button>
-            <button class="category-btn" onclick="selectCategory('학교')">학교</button>
-        </div>
-    </div>
+    <section id="futureList" class="future-list" aria-hidden="true">
+      <div class="future-title">
+        <h2>어떤 미래를<br />현대에 적용할까요?</h2>
+        <p>영화 속 미장센과 미래 이미지를 선택하면, 현재의 공간이 다른 미래로 재해석됩니다.</p>
+      </div>
+      <div id="futureButtons" class="future-buttons"></div>
+    </section>
 
-    <script>
-        const startBtn = document.getElementById('start-btn');
-        const title = document.querySelector('h1');
-        const introText = document.getElementById('intro-text');
-        const btnGroup = document.getElementById('btn-group');
+    <div id="flashImage" class="flash-image"></div>
+    <div id="closingMask" class="closing-mask"></div>
+  </main>
 
-        // 사운드 설정 (경로 확인 필수!)
-        const typeSound = new Audio('./assets/sounds/typewriter-key-1.mp3');
+  <script>
+    "use strict";
 
-        startBtn.addEventListener('click', () => {
-            // 1. 애니메이션 시작 전 버튼 크기를 현재 상태로 고정 (글자 사라질 때 튕김 방지)
-            const rect = startBtn.getBoundingClientRect();
-            startBtn.style.width = rect.width + 'px';
-            startBtn.style.height = rect.height + 'px';
+    /*
+      이미지 파일을 넣는 방법
+      1) index.html 옆에 assets/images 폴더를 만든다.
+      2) 아래 image 값을 실제 파일명으로 바꾼다.
+         예: "./assets/images/city.jpg"
+      3) 파일이 없어도 그라데이션 배경으로 임시 표시된다.
+    */
 
-            // 2. UI 숨기기 및 버튼 확장
-            title.style.opacity = '0';
-            startBtn.innerText = ""; 
-            
-            // 약간의 시차를 두어 클래스를 추가해야 애니메이션이 확실히 작동합니다.
-            setTimeout(() => {
-                startBtn.classList.add('expand');
-            }, 10);
+    const categories = [
+      {
+        key: "city",
+        label: "도시",
+        image: "./assets/images/city.jpg",
+        fallback: "linear-gradient(135deg, #18243a, #4a86b8 45%, #f2c66d)",
+        guide: "도시는 기술, 이동, 감시, 공동체가 가장 밀집된 현대의 공간입니다."
+      },
+      {
+        key: "home",
+        label: "가정",
+        image: "./assets/images/home.jpg",
+        fallback: "linear-gradient(135deg, #2a1d1d, #b46a45 48%, #f4d7aa)",
+        guide: "가정은 사적인 삶과 기술이 만나는 가장 가까운 현대의 공간입니다."
+      },
+      {
+        key: "school",
+        label: "학교",
+        image: "./assets/images/school.jpg",
+        fallback: "linear-gradient(135deg, #17251f, #4a7c59 48%, #d6e2ba)",
+        guide: "학교는 지식, 규율, 관계, 미래 세대의 가치가 형성되는 공간입니다."
+      }
+    ];
 
-            // 3. 화면이 완전히 검게 변한 후 텍스트 출력
-            setTimeout(() => {
-                typeWriter("당신은 현대의 모습을 바꿀 수 있는 능력이 있습니다.", () => {
-                    setTimeout(showSecondQuestion, 1500);
-                });
-            }, 1500);
-        }, { once: true });
+    const futures = [
+      {
+        title: "Blade Runner 2049",
+        concept: "네온과 안개로 구성된 고밀도 도시 미래",
+        color: "#f08a24",
+        image: "./assets/images/future-blade-runner.jpg",
+        changed: "linear-gradient(135deg, #130d10, #f08a24 50%, #2a2347)"
+      },
+      {
+        title: "Her",
+        concept: "따뜻한 색감의 인공지능 동반자 미래",
+        color: "#d95f55",
+        image: "./assets/images/future-her.jpg",
+        changed: "linear-gradient(135deg, #402020, #d95f55 55%, #f0b08a)"
+      },
+      {
+        title: "Wall-E",
+        concept: "소비와 환경 문제 이후의 생태적 미래",
+        color: "#c5a15a",
+        image: "./assets/images/future-walle.jpg",
+        changed: "linear-gradient(135deg, #342b1a, #c5a15a 48%, #6c8f86)"
+      },
+      {
+        title: "Interstellar",
+        concept: "우주적 시야와 생존의 문제를 담은 미래",
+        color: "#4a6f8f",
+        image: "./assets/images/future-interstellar.jpg",
+        changed: "linear-gradient(135deg, #07111f, #4a6f8f 48%, #c4d7e8)"
+      },
+      {
+        title: "The Matrix",
+        concept: "가상현실과 통제 시스템이 지배하는 미래",
+        color: "#2bb35f",
+        image: "./assets/images/future-matrix.jpg",
+        changed: "linear-gradient(135deg, #06130a, #2bb35f 50%, #0a2615)"
+      }
+    ];
 
-        function typeWriter(text, callback) {
-            introText.innerHTML = "";
-            let i = 0;
-            const timer = setInterval(() => {
-                if (i < text.length) {
-                    introText.innerHTML += text[i];
-                    
-                    // 사운드 재생 (에러 방지 처리)
-                    try {
-                        typeSound.currentTime = 0;
-                        typeSound.play().catch(() => {}); // 사운드 파일 없을 시 무시
-                    } catch(e) {}
-                    
-                    i++;
-                } else {
-                    clearInterval(timer);
-                    if (callback) callback();
-                }
-            }, 200); // 타이핑 속도 조절
-        }
+    const $ = (selector) => document.querySelector(selector);
+    const home = $("#home");
+    const startBtn = $("#startBtn");
+    const stage = $("#stage");
+    const textBox = $("#textBox");
+    const subText = $("#subText");
+    const choiceRow = $("#choiceRow");
+    const answerRow = $("#answerRow");
+    const currentImage = $("#currentImage");
+    const futureList = $("#futureList");
+    const futureButtons = $("#futureButtons");
+    const flashImage = $("#flashImage");
+    const closingMask = $("#closingMask");
 
-        function showSecondQuestion() {
-            introText.style.transition = "opacity 0.5s";
-            introText.style.opacity = "0";
-            setTimeout(() => {
-                introText.style.opacity = "1";
-                typeWriter("어떤 현대의 모습을 보겠습니까?", () => {
-                    btnGroup.style.opacity = "1";
-                });
-            }, 600);
-        }
+    let selectedCategory = null;
+    let isPlaying = false;
 
-        function selectCategory(name) {
-            alert(name + " 카테고리를 선택하셨습니다.");
-        }
-    </script>
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    function setBlackMode() {
+      document.body.style.background = "#000";
+      document.body.style.color = "#fff";
+      stage.classList.add("active");
+      stage.setAttribute("aria-hidden", "false");
+    }
+
+    function setImageBackground(element, item, useChanged = false) {
+      const fallback = useChanged ? item.changed : item.fallback;
+      element.style.backgroundImage = `url('${item.image}'), ${fallback}`;
+    }
+
+    function clearStage() {
+      textBox.textContent = "";
+      subText.textContent = "";
+      choiceRow.innerHTML = "";
+      answerRow.innerHTML = "";
+      currentImage.classList.add("hidden");
+    }
+
+    async function fadeTextOut() {
+      textBox.classList.add("hidden");
+      subText.classList.add("hidden");
+      await sleep(650);
+      textBox.textContent = "";
+      subText.textContent = "";
+      textBox.classList.remove("hidden");
+      subText.classList.remove("hidden");
+    }
+
+    async function typeWriter(text, speed = 58) {
+      textBox.textContent = "";
+      for (const char of text) {
+        textBox.textContent += char;
+        await sleep(char === " " ? speed * 0.45 : speed);
+      }
+    }
+
+    async function showButtons(target, items, className, onClick) {
+      target.innerHTML = "";
+      for (const item of items) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = `${className} hidden`;
+        btn.textContent = item.label;
+        btn.addEventListener("click", () => onClick(item));
+        target.appendChild(btn);
+        await sleep(180);
+        btn.classList.remove("hidden");
+      }
+    }
+
+    async function startExperience() {
+      if (isPlaying) return;
+      isPlaying = true;
+
+      const rect = startBtn.getBoundingClientRect();
+      startBtn.style.width = `${rect.width}px`;
+      startBtn.style.height = `${rect.height}px`;
+      startBtn.textContent = "";
+      home.style.opacity = "0";
+      home.style.transform = "translateY(-20px) scale(0.98)";
+
+      await sleep(30);
+      startBtn.classList.add("expand");
+      await sleep(1180);
+      setBlackMode();
+
+      await typeWriter("당신은 현대의 모습을 바꿀 수 있는 능력이 있습니다.");
+      await sleep(900);
+      await fadeTextOut();
+
+      await typeWriter("어떤 현대의 모습을 보겠습니까?");
+      await showButtons(choiceRow, categories, "choice-btn", selectCategory);
+    }
+
+    async function selectCategory(category) {
+      if (!isPlaying) return;
+      selectedCategory = category;
+      choiceRow.innerHTML = "";
+      await fadeTextOut();
+
+      setImageBackground(currentImage, category);
+      currentImage.classList.remove("hidden");
+      await sleep(450);
+      await typeWriter(`당신은 '${category.label}'에 대한 이미지를 골랐습니다.`, 45);
+      subText.textContent = category.guide + "\n이제 이 현대의 장면에 적용할 미래의 변화를 선택하세요.";
+      await sleep(2200);
+
+      currentImage.classList.add("hidden");
+      await fadeTextOut();
+      await typeWriter("어떤 변화가 생긴 미래를 현대에 적용하시겠습니까?", 48);
+      await sleep(1000);
+      await fadeTextOut();
+      showFutureList();
+    }
+
+    function showFutureList() {
+      clearStage();
+      futureButtons.innerHTML = "";
+      futures.forEach((future, index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "future-btn";
+        btn.style.setProperty("--item-color", future.color);
+        btn.style.setProperty("--thumb", `url('${future.image}')`);
+        btn.style.transitionDelay = `${index * 80}ms`;
+        btn.innerHTML = `<strong>${future.title}</strong><span>${future.concept}</span>`;
+        btn.addEventListener("click", () => applyFuture(future));
+        futureButtons.appendChild(btn);
+      });
+      futureList.classList.add("active");
+      futureList.setAttribute("aria-hidden", "false");
+    }
+
+    async function applyFuture(future) {
+      futureList.classList.remove("active");
+      futureList.setAttribute("aria-hidden", "true");
+
+      document.body.style.background = future.changed;
+      flashImage.style.backgroundImage = `url('${future.image}'), ${future.changed}`;
+      flashImage.classList.remove("active");
+      void flashImage.offsetWidth;
+      flashImage.classList.add("active");
+
+      await sleep(1100);
+      flashImage.classList.remove("active");
+      clearStage();
+      stage.classList.add("active");
+      stage.setAttribute("aria-hidden", "false");
+
+      setImageBackground(currentImage, future, true);
+      currentImage.classList.remove("hidden");
+      textBox.textContent = "이것이 당신이 바꾸신 미래입니다.";
+      subText.textContent = `${selectedCategory ? selectedCategory.label : "현대"}의 모습이 '${future.title}'의 미장센과 미래 상상력으로 재구성되었습니다.\n다른 미래로 바꾸시겠습니까?`;
+      showAnswerButtons();
+    }
+
+    function showAnswerButtons() {
+      answerRow.innerHTML = "";
+      const yes = document.createElement("button");
+      const no = document.createElement("button");
+      yes.type = "button";
+      no.type = "button";
+      yes.className = "answer-btn";
+      no.className = "answer-btn";
+      yes.textContent = "네";
+      no.textContent = "아니요";
+      yes.addEventListener("click", async () => {
+        clearStage();
+        document.body.style.background = "#000";
+        showFutureList();
+      });
+      no.addEventListener("click", endExperience);
+      answerRow.append(yes, no);
+    }
+
+    async function endExperience() {
+      clearStage();
+      document.body.style.background = "#000";
+      await typeWriter("미래는 언제나 바뀔 수 있으며\n당신은 디지털 인문학을 통해 분석 및 해석할 수 있습니다.", 50);
+      await sleep(1000);
+      await fadeTextOut();
+      await typeWriter("감사합니다.", 70);
+
+      closingMask.classList.add("active");
+      await sleep(4800);
+      resetExperience();
+    }
+
+    function resetExperience() {
+      selectedCategory = null;
+      isPlaying = false;
+      clearStage();
+      stage.classList.remove("active");
+      stage.setAttribute("aria-hidden", "true");
+      futureList.classList.remove("active");
+      futureList.setAttribute("aria-hidden", "true");
+      closingMask.classList.remove("active");
+      closingMask.style.animation = "none";
+      void closingMask.offsetWidth;
+      closingMask.style.animation = "";
+      startBtn.classList.remove("expand");
+      startBtn.removeAttribute("style");
+      startBtn.textContent = "시작하기";
+      home.removeAttribute("style");
+      document.body.style.background = "#fff";
+      document.body.style.color = "#111";
+    }
+
+    startBtn.addEventListener("click", startExperience);
+  </script>
 </body>
 </html>
