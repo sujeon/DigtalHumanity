@@ -385,7 +385,7 @@
       to { transform: scale(0); border-radius: 999px; }
     }
   </style>
-<script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000f51472069092293edbd0bcb4%26ts%3D494423%26p%3Dfs%26cid%3D1%26sig%3Dde3e9adeca0e47ab166d8bcfdfa209ebe7677a6d98712f4f3a7ea9098afbc785%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000080607206a1cae69693eec17c%26fn%3Dindex_space_specific_movie_results.html%26cd%3Dattachment%26ts%3D494423%26p%3Dfs%26cid%3D1%26sig%3Dee6d6a58c98b8048f7af98ce1f207f35057da7e159195d5267fd4f871af789ba%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
@@ -421,9 +421,9 @@
     /*
       이미지 파일을 넣는 방법
       1) index.html 옆에 assets/images 폴더를 만든다.
-      2) 아래 image 값을 실제 파일명으로 바꾼다.
-         예: "./assets/images/city.jpg"
-      3) 파일이 없어도 그라데이션 배경으로 임시 표시된다.
+      2) button-영화명.jpg는 영화 버튼에 보이는 스틸컷/포스터 이미지다.
+      3) result-영화명-city/home/school.jpg는 도시, 가정, 학교 선택에 따라 결과 화면에 보이는 이미지다.
+      4) 파일이 없어도 그라데이션 배경으로 임시 표시된다.
     */
 
     const categories = [
@@ -455,36 +455,86 @@
         title: "투모로우",
         concept: "기후 위기가 도시와 일상을 얼어붙게 만드는 재난적 미래",
         color: "#8fb8d8",
-        image: "./assets/images/future-tomorrow.jpg",
-        changed: "linear-gradient(135deg, #07131c, #8fb8d8 48%, #f4fbff)"
+        image: "./assets/images/button-tomorrow.jpg", // 영화 버튼에 들어갈 스틸컷
+        changed: "linear-gradient(135deg, #07131c, #8fb8d8 48%, #f4fbff)",
+        resultImages: {
+          city: "./assets/images/result-tomorrow-city.jpg",
+          home: "./assets/images/result-tomorrow-home.jpg",
+          school: "./assets/images/result-tomorrow-school.jpg"
+        },
+        resultText: {
+          city: "기후 재난으로 고층 빌딩과 도로가 얼어붙고, 도시는 생존을 위한 대피 공간으로 바뀌었습니다.",
+          home: "가정은 난방과 식량을 공유하는 피난처가 되었고, 일상은 생존 중심으로 재편되었습니다.",
+          school: "학교는 수업 공간을 넘어 임시 대피소와 기후 재난 교육의 장소로 바뀌었습니다."
+        }
       },
       {
-        title: "매드맥스: 분노의 도로",
+        title: "매드맥스",
         concept: "자원 고갈 이후 황폐한 사막과 생존 경쟁으로 재편된 미래",
         color: "#d86f24",
-        image: "./assets/images/future-madmax.jpg",
-        changed: "linear-gradient(135deg, #211006, #d86f24 50%, #f2c06b)"
+        image: "./assets/images/button-madmax.jpg",
+        changed: "linear-gradient(135deg, #211006, #d86f24 50%, #f2c06b)",
+        resultImages: {
+          city: "./assets/images/result-madmax-city.jpg",
+          home: "./assets/images/result-madmax-home.jpg",
+          school: "./assets/images/result-madmax-school.jpg"
+        },
+        resultText: {
+          city: "도시는 모래와 철제 구조물로 뒤덮이고, 물과 연료를 중심으로 권력이 재편되었습니다.",
+          home: "가정은 안락한 생활공간이 아니라 자원을 지키는 작은 요새처럼 변했습니다.",
+          school: "학교는 지식보다 생존 기술, 자원 관리, 공동체 방어를 배우는 장소가 되었습니다."
+        }
       },
       {
         title: "월-E",
         concept: "과잉 소비와 쓰레기 문제 이후 인간이 지구를 떠난 생태적 미래",
         color: "#c9a35a",
-        image: "./assets/images/future-walle.jpg",
-        changed: "linear-gradient(135deg, #2c2418, #c9a35a 48%, #6b8f87)"
+        image: "./assets/images/button-walle.jpg",
+        changed: "linear-gradient(135deg, #2c2418, #c9a35a 48%, #6b8f87)",
+        resultImages: {
+          city: "./assets/images/result-walle-city.jpg",
+          home: "./assets/images/result-walle-home.jpg",
+          school: "./assets/images/result-walle-school.jpg"
+        },
+        resultText: {
+          city: "도시는 소비의 흔적인 쓰레기 더미와 자동화 기계만 남은 공간으로 변했습니다.",
+          home: "가정은 편리함에 의존한 생활의 결과를 보여주는 폐허이자 재활용의 공간이 되었습니다.",
+          school: "학교는 환경 회복과 소비문화 비판을 배우는 생태 교육의 장소로 바뀌었습니다."
+        }
       },
       {
         title: "블레이드 러너",
         concept: "네온, 비, 거대한 광고판이 인간성과 기술의 경계를 흐리는 도시 미래",
         color: "#c04cf0",
-        image: "./assets/images/future-blade-runner.jpg",
-        changed: "linear-gradient(135deg, #090713, #c04cf0 45%, #f08a24)"
+        image: "./assets/images/button-blade-runner.jpg",
+        changed: "linear-gradient(135deg, #090713, #c04cf0 45%, #f08a24)",
+        resultImages: {
+          city: "./assets/images/result-blade-runner-city.jpg",
+          home: "./assets/images/result-blade-runner-home.jpg",
+          school: "./assets/images/result-blade-runner-school.jpg"
+        },
+        resultText: {
+          city: "도시는 네온 광고와 비, 인공 생명체가 뒤섞인 초고밀도 미래 도시로 바뀌었습니다.",
+          home: "가정은 따뜻한 사적 공간이라기보다 감시 기술과 인공 감정이 스며든 공간이 되었습니다.",
+          school: "학교는 인간과 복제인간, 인공지능의 경계를 질문하는 윤리 교육의 장으로 바뀌었습니다."
+        }
       },
       {
         title: "매트릭스",
         concept: "현실과 가상 세계가 뒤섞이고 시스템이 인간의 인식을 통제하는 미래",
         color: "#2bb35f",
-        image: "./assets/images/future-matrix.jpg",
-        changed: "linear-gradient(135deg, #031007, #2bb35f 50%, #071d10)"
+        image: "./assets/images/button-matrix.jpg",
+        changed: "linear-gradient(135deg, #031007, #2bb35f 50%, #071d10)",
+        resultImages: {
+          city: "./assets/images/result-matrix-city.jpg",
+          home: "./assets/images/result-matrix-home.jpg",
+          school: "./assets/images/result-matrix-school.jpg"
+        },
+        resultText: {
+          city: "도시는 현실처럼 보이지만 코드와 시스템이 통제하는 가상 공간으로 변했습니다.",
+          home: "가정은 실제 생활공간인지 가상으로 구성된 안락함인지 구분하기 어려운 장소가 되었습니다.",
+          school: "학교는 지식을 암기하는 곳이 아니라 현실을 의심하고 시스템을 해석하는 공간이 되었습니다."
+        }
       }
     ];
 
@@ -517,6 +567,19 @@
     function setImageBackground(element, item, useChanged = false) {
       const fallback = useChanged ? item.changed : item.fallback;
       element.style.backgroundImage = `url('${item.image}'), ${fallback}`;
+    }
+
+    function getResultForSelectedSpace(future) {
+      const spaceKey = selectedCategory ? selectedCategory.key : "city";
+      const resultImage = future.resultImages?.[spaceKey] || future.image;
+      const resultDescription = future.resultText?.[spaceKey] || future.concept;
+
+      return {
+        image: resultImage,
+        fallback: future.changed,
+        changed: future.changed,
+        description: resultDescription
+      };
     }
 
     function clearStage() {
