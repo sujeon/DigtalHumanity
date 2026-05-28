@@ -114,6 +114,82 @@
       transition: opacity 700ms ease, transform 700ms ease;
     }
 
+
+
+    .type-char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(18px) scale(0.86);
+      animation: charPop 360ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .sub-text.reveal {
+      animation: subReveal 720ms ease forwards;
+    }
+
+    @keyframes charPop {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes subReveal {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .text-box.single-line-title {
+      width: max-content;
+      max-width: 96vw;
+      white-space: nowrap;
+      word-break: keep-all;
+      overflow: visible;
+      font-size: clamp(1.35rem, 2.8vw, 3.1rem);
+      line-height: 1.2;
+    }
+
+    .text-box.future-question-line {
+      font-size: clamp(1.2rem, 2.45vw, 2.75rem);
+      max-width: 98vw;
+      white-space: nowrap;
+      word-break: keep-all;
+      letter-spacing: -0.06em;
+    }
+
+    .future-title h2 {
+      white-space: nowrap;
+      word-break: keep-all;
+      letter-spacing: -0.055em;
+      font-size: clamp(1.55rem, 3.3vw, 4.25rem);
+    }
+
+
+    .text-box.image-choice-caption {
+      width: max-content;
+      max-width: 96vw;
+      margin: 22px auto 0;
+      padding: clamp(12px, 1.7vw, 20px) clamp(24px, 3vw, 44px);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.48);
+      color: #fff;
+      font-size: clamp(1.25rem, 2.6vw, 2.9rem);
+      line-height: 1.15;
+      font-weight: 750;
+      letter-spacing: -0.045em;
+      white-space: nowrap;
+      text-align: center;
+      text-shadow: 0 8px 28px rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 52px rgba(0, 0, 0, 0.35);
+    }
+
     .sub-text {
       margin-top: 18px;
       color: rgba(255, 255, 255, 0.72);
@@ -121,6 +197,21 @@
       line-height: 1.7;
       word-break: keep-all;
       white-space: pre-line;
+    }
+
+    .sub-text.single-line {
+      width: max-content;
+      max-width: 96vw;
+      margin: 18px auto 0;
+      padding: 14px 24px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.38);
+      color: rgba(255, 255, 255, 0.86);
+      font-size: clamp(0.78rem, 1.18vw, 1.05rem);
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: visible;
+      backdrop-filter: blur(10px);
     }
 
     .choice-row,
@@ -153,14 +244,52 @@
 
     .current-image,
     .future-image {
-      width: min(88vw, 900px);
-      height: min(46vh, 420px);
-      margin: 0 auto 28px;
+      position: relative;
+      width: min(94vw, 1120px);
+      height: min(58vh, 580px);
+      margin: 0 auto 24px;
       border-radius: 28px;
       background-size: cover;
       background-position: center;
       box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
       transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .current-image.with-center-caption::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.44));
+      pointer-events: none;
+    }
+
+    .current-image.with-center-caption::after {
+      content: attr(data-caption);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: max-content;
+      max-width: 94%;
+      padding: clamp(14px, 2vw, 22px) clamp(22px, 3vw, 42px);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.48);
+      color: #fff;
+      font-size: clamp(1.25rem, 3vw, 3.2rem);
+      line-height: 1.15;
+      font-weight: 750;
+      letter-spacing: -0.045em;
+      white-space: nowrap;
+      text-align: center;
+      text-shadow: 0 8px 28px rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 52px rgba(0, 0, 0, 0.35);
+    }
+
+    .current-image.hidden,
+    .future-image.hidden {
+      display: none;
     }
 
     .future-list {
@@ -281,7 +410,7 @@
     .future-buttons:hover .future-btn,
     .future-buttons:focus-within .future-btn {
       opacity: 0.42;
-      filter: brightness(0.48) saturate(0.65) contrast(0.95);
+      filter: brightness(0.6) saturate(0.65) contrast(0.95);
     }
 
     .future-buttons .future-btn:hover,
@@ -353,6 +482,30 @@
       line-height: 1.45;
     }
 
+    .future-tags {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .future-tag {
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: clamp(0.72rem, 0.86vw, 0.86rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      background: color-mix(in srgb, var(--item-color), rgba(0, 0, 0, 0.42) 58%);
+      box-shadow: 0 0 14px color-mix(in srgb, var(--item-color), transparent 50%);
+      text-shadow: 0 6px 18px rgba(0, 0, 0, 0.72);
+      white-space: nowrap;
+    }
+
     @media (max-width: 980px) {
       .future-list {
         overflow-y: auto;
@@ -376,6 +529,216 @@
 
       .future-btn {
         min-height: 360px;
+      }
+    }
+
+
+    .result-scene {
+      position: fixed;
+      inset: 0;
+      z-index: 18;
+      opacity: 0;
+      pointer-events: none;
+      background-image: var(--result-bg);
+      background-size: cover;
+      background-position: center;
+      transition: opacity 760ms ease;
+      color: #fff;
+    }
+
+    .result-scene.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .result-scene::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.14);
+      opacity: 1;
+      transition: opacity 720ms ease;
+    }
+
+    .result-scene.panel-open::before {
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.86) 0%, rgba(0, 0, 0, 0.68) 22%, rgba(0, 0, 0, 0.28) 48%, rgba(0, 0, 0, 0.04) 100%);
+    }
+
+    .result-panel {
+      position: absolute;
+      left: clamp(28px, 6vw, 92px);
+      top: 50%;
+      width: min(560px, 42vw);
+      transform: translateY(-46%) translateX(-34px);
+      opacity: 0;
+      padding: clamp(24px, 3.2vw, 48px);
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04));
+      backdrop-filter: blur(14px);
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52);
+      transition: opacity 720ms ease, transform 720ms var(--ease);
+    }
+
+    .result-panel.active {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .result-panel .eyebrow {
+      margin: 0 0 18px;
+      color: rgba(255,255,255,0.68);
+      font-size: clamp(0.82rem, 1vw, 1rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .result-panel h2 {
+      margin: 0 0 22px;
+      font-size: clamp(2rem, 4.5vw, 4.7rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      word-break: keep-all;
+    }
+
+    .result-panel p {
+      margin: 0;
+      color: rgba(255,255,255,0.86);
+      font-size: clamp(0.96rem, 1.3vw, 1.2rem);
+      line-height: 1.85;
+      word-break: keep-all;
+      white-space: pre-line;
+    }
+
+    .movie-info {
+      position: fixed;
+      inset: 0;
+      z-index: 19;
+      display: grid;
+      place-items: center;
+      padding: clamp(28px, 5vw, 72px);
+      opacity: 0;
+      pointer-events: none;
+      color: #111;
+      background: #d7d7d7;
+      transition: opacity 720ms ease;
+    }
+
+    .movie-info.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .movie-info-grid {
+      width: min(1180px, 92vw);
+      min-height: min(620px, 76vh);
+      display: grid;
+      grid-template-columns: minmax(220px, 0.9fr) minmax(320px, 1.35fr);
+      gap: clamp(28px, 5vw, 72px);
+      align-items: center;
+    }
+
+    .movie-poster {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      border-radius: 4px;
+      background-image: var(--poster-bg);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+    }
+
+    .movie-copy h2 {
+      margin: 0 0 16px;
+      font-size: clamp(2rem, 4vw, 4.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      word-break: keep-all;
+    }
+
+    .movie-copy .movie-concept {
+      margin: 0 0 26px;
+      color: rgba(0, 0, 0, 0.58);
+      font-size: clamp(1rem, 1.25vw, 1.18rem);
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    .movie-detail-block {
+      margin-top: 24px;
+    }
+
+    .movie-detail-block h3 {
+      margin: 0 0 10px;
+      font-size: clamp(1rem, 1.4vw, 1.25rem);
+    }
+
+    .movie-detail-block p {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.72);
+      font-size: clamp(0.9rem, 1.12vw, 1.05rem);
+      line-height: 1.78;
+      word-break: keep-all;
+    }
+
+    .ott-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ott-list li {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+      color: rgba(0,0,0,0.76);
+      font-size: 0.92rem;
+    }
+
+    .movie-answer-row {
+      justify-content: flex-start;
+      margin-top: 34px;
+    }
+
+    .movie-answer-row .answer-btn {
+      color: #111;
+      border-color: rgba(0,0,0,0.2);
+      background: rgba(255,255,255,0.54);
+    }
+
+    .movie-answer-row .answer-btn:hover {
+      border-color: rgba(0,0,0,0.7);
+      background: rgba(255,255,255,0.88);
+    }
+
+    @media (max-width: 840px) {
+      .result-panel {
+        left: 50%;
+        width: min(88vw, 560px);
+        transform: translate(-50%, -46%);
+      }
+
+      .result-panel.active {
+        transform: translate(-50%, -50%);
+      }
+
+      .movie-info {
+        overflow-y: auto;
+        place-items: start center;
+      }
+
+      .movie-info-grid {
+        grid-template-columns: 1fr;
+        min-height: 0;
+      }
+
+      .movie-poster {
+        width: min(320px, 72vw);
+        margin: 0 auto;
       }
     }
 
@@ -424,6 +787,22 @@
     }
 
 
+
+    #textBox.small-title {
+      min-height: 0;
+      margin-bottom: 0;
+    }
+
+    #subText.essay-text {
+      max-width: 760px;
+      margin: 0 auto;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: clamp(0.9rem, 1.35vw, 1.08rem);
+      line-height: 2.05;
+      letter-spacing: -0.02em;
+      white-space: pre-line;
+    }
+
     .next-btn {
       position: fixed;
       right: clamp(22px, 4vw, 54px);
@@ -468,8 +847,33 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
+
+    .back-btn {
+      left: clamp(22px, 4vw, 54px);
+      right: auto;
+    }
+
+    .refresh-btn {
+      right: clamp(22px, 4vw, 54px);
+      bottom: clamp(22px, 4vw, 54px);
+    }
+
+    .refresh-btn svg {
+      transition: transform 320ms ease;
+    }
+
+    .refresh-btn:hover svg,
+    .refresh-btn:focus-visible svg {
+      transform: rotate(48deg);
+    }
+
+    /* 마지막 영화 정보 페이지에서는 일반 다음 화살표만 숨기고,
+       선택지로 돌아가는 왼쪽 화살표와 홈페이지로 돌아가는 새로고침 아이콘은 유지합니다. */
+    .movie-info.active ~ #nextBtn {
+      display: none;
+    }
   </style>
-<script type="text/javascript" nonce="14670706ddfd4fee987dadf31fb" src="//local.adguard.org?ts=1779931512199&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000005528720683476ee224c37fec%26fn%3Dindex_all_manual_arrows.html%26cd%3Dattachment%26ts%3D494425%26p%3Dfs%26cid%3D1%26sig%3D1d6310d1c7899b0f73bcbc766d882567b0791827b05ddb73dbd5b7dbae44296e%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="14670706ddfd4fee987dadf31fb" src="//local.adguard.org?ts=1779931512199&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1779962351008&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000008114720b87e22e2905522854%26fn%3Dindex_future_question_single_line.html%26cd%3Dattachment%26ts%3D494433%26p%3Dfs%26cid%3D1%26sig%3D357e3fbcd2b0a6a81182e814fde88f7b5d98fdae4352de6f32bc6ae57810bf5c%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1779962351008&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;name=Web%20of%20Trust&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
@@ -489,10 +893,38 @@
 
     <section id="futureList" class="future-list" aria-hidden="true">
       <div class="future-title">
-        <h2>어떤 미래를<br />현대에 적용할까요?</h2>
+        <h2>미래를 바라보는 관점을 선택해주세요.</h2>
         <p>영화 속 미장센과 미래 이미지를 선택하면, 현재의 공간이 다른 미래로 재해석됩니다.</p>
       </div>
       <div id="futureButtons" class="future-buttons"></div>
+    </section>
+
+
+    <section id="resultScene" class="result-scene" aria-hidden="true">
+      <article id="resultPanel" class="result-panel">
+        <p class="eyebrow">Selected Future</p>
+        <h2 id="resultTitle"></h2>
+        <p id="resultDescription"></p>
+      </article>
+    </section>
+
+    <section id="movieInfo" class="movie-info" aria-hidden="true">
+      <div class="movie-info-grid">
+        <div id="moviePoster" class="movie-poster"></div>
+        <article class="movie-copy">
+          <h2 id="movieTitle"></h2>
+          <p id="movieConcept" class="movie-concept"></p>
+          <div class="movie-detail-block">
+            <h3>줄거리</h3>
+            <p id="moviePlot"></p>
+          </div>
+          <div class="movie-detail-block">
+            <h3>OTT 정보</h3>
+            <ul id="ottList" class="ott-list"></ul>
+          </div>
+          <div id="movieAnswerRow" class="movie-answer-row" aria-hidden="true"></div>
+        </article>
+      </div>
     </section>
 
     <div id="flashImage" class="flash-image"></div>
@@ -501,6 +933,18 @@
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M5 12h13" />
         <path d="m13 6 6 6-6 6" />
+      </svg>
+    </button>
+    <button id="backBtn" class="next-btn back-btn" type="button" aria-label="영화 선택지로 돌아가기" title="선택지로 돌아가기">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 12H6" />
+        <path d="m11 6-6 6 6 6" />
+      </svg>
+    </button>
+    <button id="refreshBtn" class="next-btn refresh-btn" type="button" aria-label="홈페이지로 돌아가기" title="홈페이지로 돌아가기">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 11a8.1 8.1 0 0 0-15.5-2M4 5v4h4" />
+        <path d="M4 13a8.1 8.1 0 0 0 15.5 2M20 19v-4h-4" />
       </svg>
     </button>
   </main>
@@ -542,44 +986,77 @@
 
     const futures = [
       {
-        title: "투모로우",
-        concept: "기후 위기가 도시와 일상을 얼어붙게 만드는 재난적 미래",
-        color: "#8fb8d8",
-        image: "./assets/images/button-tomorrow.jpg", // 영화 버튼에 들어갈 스틸컷
-        changed: "linear-gradient(135deg, #07131c, #8fb8d8 48%, #f4fbff)",
+        title: "설국열차",
+        concept: "얼어붙은 지구 이후, 계급과 생존이 열차 안에 압축된 미래",
+        tags: ["#환경붕괴", "#계급구조", "#생존질서"],
+        color: "#9fb7c7",
+        image: "./assets/images/button-snowpiercer.jpg",
+        poster: "./assets/images/poster-snowpiercer.jpg",
+        plot: "기후 실험 실패로 지구가 얼어붙은 뒤, 살아남은 인류는 멈추지 않는 열차 안에서 계급에 따라 나뉘어 살아갑니다. 꼬리칸 사람들은 억압된 질서에 맞서 앞칸으로 이동하며 세계의 구조와 권력의 실체를 마주합니다.",
+        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
+        changed: "linear-gradient(135deg, #06111a, #9fb7c7 48%, #f2f7fb)",
         resultImages: {
-          city: "./assets/images/result-tomorrow-city.jpg",
-          home: "./assets/images/result-tomorrow-home.jpg",
-          school: "./assets/images/result-tomorrow-school.jpg"
+          city: "./assets/images/result-snowpiercer-city.jpg",
+          home: "./assets/images/result-snowpiercer-home.jpg",
+          school: "./assets/images/result-snowpiercer-school.jpg"
         },
         resultText: {
-          city: "기후 재난으로 고층 빌딩과 도로가 얼어붙고, 도시는 생존을 위한 대피 공간으로 바뀌었습니다.",
-          home: "가정은 난방과 식량을 공유하는 피난처가 되었고, 일상은 생존 중심으로 재편되었습니다.",
-          school: "학교는 수업 공간을 넘어 임시 대피소와 기후 재난 교육의 장소로 바뀌었습니다."
+          city: "도시는 얼어붙은 외부 세계처럼 기능을 잃고, 생존 가능한 공간이 계급적으로 분리된 폐쇄 구조로 바뀌었습니다.",
+          home: "가정은 따뜻한 사적 공간이 아니라 제한된 자원과 질서를 견디는 생존 구역으로 변했습니다.",
+          school: "학교는 미래 세대에게 체제의 규칙과 계급적 질서를 주입하는 통제 공간으로 바뀌었습니다."
         }
       },
       {
-        title: "매드맥스",
-        concept: "자원 고갈 이후 황폐한 사막과 생존 경쟁으로 재편된 미래",
-        color: "#d86f24",
-        image: "./assets/images/button-madmax.jpg",
-        changed: "linear-gradient(135deg, #211006, #d86f24 50%, #f2c06b)",
+        title: "Blade Runner 2049",
+        concept: "네온, 안개, 거대한 광고가 인간성과 기술의 경계를 흐리는 도시 미래",
+        tags: ["#AI공존", "#인간성", "#정체성"],
+        color: "#c04cf0",
+        image: "./assets/images/button-blade-runner-2049.jpg",
+        poster: "./assets/images/poster-blade-runner-2049.jpg",
+        plot: "인간과 복제인간의 경계가 흐려진 미래 도시에서, 블레이드 러너 K는 오래 숨겨진 비밀을 추적합니다. 기억, 정체성, 인간다움에 대한 질문이 네온과 폐허의 미장센 속에서 확장됩니다.",
+        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
+        changed: "linear-gradient(135deg, #090713, #c04cf0 45%, #f08a24)",
         resultImages: {
-          city: "./assets/images/result-madmax-city.jpg",
-          home: "./assets/images/result-madmax-home.jpg",
-          school: "./assets/images/result-madmax-school.jpg"
+          city: "./assets/images/result-blade-runner-2049-city.jpg",
+          home: "./assets/images/result-blade-runner-2049-home.jpg",
+          school: "./assets/images/result-blade-runner-2049-school.jpg"
         },
         resultText: {
-          city: "도시는 모래와 철제 구조물로 뒤덮이고, 물과 연료를 중심으로 권력이 재편되었습니다.",
-          home: "가정은 안락한 생활공간이 아니라 자원을 지키는 작은 요새처럼 변했습니다.",
-          school: "학교는 지식보다 생존 기술, 자원 관리, 공동체 방어를 배우는 장소가 되었습니다."
+          city: "도시는 네온 광고, 비, 인공 생명체가 뒤섞인 초고밀도 미래 도시로 바뀌었습니다.",
+          home: "가정은 감정과 기억마저 기술로 보완되는 차갑고 고립된 생활 공간으로 변했습니다.",
+          school: "학교는 인간, 복제인간, 인공지능의 경계를 질문하는 윤리 교육의 장으로 바뀌었습니다."
         }
       },
       {
-        title: "월-E",
+        title: "The Matrix",
+        concept: "현실과 가상 세계가 뒤섞이고 시스템이 인간의 인식을 통제하는 미래",
+        tags: ["#가상현실", "#기계통제", "#자유의지"],
+        color: "#2bb35f",
+        image: "./assets/images/button-matrix.jpg",
+        poster: "./assets/images/poster-matrix.jpg",
+        plot: "평범한 현실을 살아가던 네오는 자신이 믿어온 세계가 거대한 가상 시스템이라는 사실을 알게 됩니다. 그는 현실과 통제, 자유의지에 대한 질문 속에서 시스템에 맞서는 선택을 하게 됩니다.",
+        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
+        changed: "linear-gradient(135deg, #031007, #2bb35f 50%, #071d10)",
+        resultImages: {
+          city: "./assets/images/result-matrix-city.jpg",
+          home: "./assets/images/result-matrix-home.jpg",
+          school: "./assets/images/result-matrix-school.jpg"
+        },
+        resultText: {
+          city: "도시는 현실처럼 보이지만 코드와 시스템이 통제하는 가상 공간으로 변했습니다.",
+          home: "가정은 실제 생활공간인지 가상으로 구성된 안락함인지 구분하기 어려운 장소가 되었습니다.",
+          school: "학교는 지식을 암기하는 곳이 아니라 현실을 의심하고 시스템을 해석하는 공간이 되었습니다."
+        }
+      },
+      {
+        title: "WALL-E",
         concept: "과잉 소비와 쓰레기 문제 이후 인간이 지구를 떠난 생태적 미래",
+        tags: ["#환경오염", "#소비사회", "#인간소외"],
         color: "#c9a35a",
         image: "./assets/images/button-walle.jpg",
+        poster: "./assets/images/poster-walle.jpg",
+        plot: "쓰레기로 뒤덮인 지구에 홀로 남은 청소 로봇 월-E는 새로운 생명의 가능성을 발견합니다. 편리함과 소비에 익숙해진 인간 사회가 잃어버린 지구와 관계를 다시 돌아보게 만드는 이야기입니다.",
+        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
         changed: "linear-gradient(135deg, #2c2418, #c9a35a 48%, #6b8f87)",
         resultImages: {
           city: "./assets/images/result-walle-city.jpg",
@@ -593,37 +1070,24 @@
         }
       },
       {
-        title: "블레이드 러너",
-        concept: "네온, 비, 거대한 광고판이 인간성과 기술의 경계를 흐리는 도시 미래",
-        color: "#c04cf0",
-        image: "./assets/images/button-blade-runner.jpg",
-        changed: "linear-gradient(135deg, #090713, #c04cf0 45%, #f08a24)",
+        title: "Mad Max",
+        concept: "자원 고갈 이후 황폐한 사막과 생존 경쟁으로 재편된 미래",
+        tags: ["#자원고갈", "#핵전쟁", "#문명붕괴"],
+        color: "#d86f24",
+        image: "./assets/images/button-madmax.jpg",
+        poster: "./assets/images/poster-madmax.jpg",
+        plot: "자원이 고갈된 사막 세계에서 물과 연료는 권력이 됩니다. 맥스와 퓨리오사는 폭력적 지배 체제에서 벗어나기 위해 질주하며, 생존과 해방의 가능성을 찾아갑니다.",
+        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
+        changed: "linear-gradient(135deg, #211006, #d86f24 50%, #f2c06b)",
         resultImages: {
-          city: "./assets/images/result-blade-runner-city.jpg",
-          home: "./assets/images/result-blade-runner-home.jpg",
-          school: "./assets/images/result-blade-runner-school.jpg"
+          city: "./assets/images/result-madmax-city.jpg",
+          home: "./assets/images/result-madmax-home.jpg",
+          school: "./assets/images/result-madmax-school.jpg"
         },
         resultText: {
-          city: "도시는 네온 광고와 비, 인공 생명체가 뒤섞인 초고밀도 미래 도시로 바뀌었습니다.",
-          home: "가정은 따뜻한 사적 공간이라기보다 감시 기술과 인공 감정이 스며든 공간이 되었습니다.",
-          school: "학교는 인간과 복제인간, 인공지능의 경계를 질문하는 윤리 교육의 장으로 바뀌었습니다."
-        }
-      },
-      {
-        title: "매트릭스",
-        concept: "현실과 가상 세계가 뒤섞이고 시스템이 인간의 인식을 통제하는 미래",
-        color: "#2bb35f",
-        image: "./assets/images/button-matrix.jpg",
-        changed: "linear-gradient(135deg, #031007, #2bb35f 50%, #071d10)",
-        resultImages: {
-          city: "./assets/images/result-matrix-city.jpg",
-          home: "./assets/images/result-matrix-home.jpg",
-          school: "./assets/images/result-matrix-school.jpg"
-        },
-        resultText: {
-          city: "도시는 현실처럼 보이지만 코드와 시스템이 통제하는 가상 공간으로 변했습니다.",
-          home: "가정은 실제 생활공간인지 가상으로 구성된 안락함인지 구분하기 어려운 장소가 되었습니다.",
-          school: "학교는 지식을 암기하는 곳이 아니라 현실을 의심하고 시스템을 해석하는 공간이 되었습니다."
+          city: "도시는 모래와 철제 구조물로 뒤덮이고, 물과 연료를 중심으로 권력이 재편되었습니다.",
+          home: "가정은 안락한 생활공간이 아니라 자원을 지키는 작은 요새처럼 변했습니다.",
+          school: "학교는 지식보다 생존 기술, 자원 관리, 공동체 방어를 배우는 장소가 되었습니다."
         }
       }
     ];
@@ -642,10 +1106,25 @@
     const flashImage = $("#flashImage");
     const closingMask = $("#closingMask");
     const nextBtn = $("#nextBtn");
+    const backBtn = $("#backBtn");
+    const refreshBtn = $("#refreshBtn");
+    const resultScene = $("#resultScene");
+    const resultPanel = $("#resultPanel");
+    const resultTitle = $("#resultTitle");
+    const resultDescription = $("#resultDescription");
+    const movieInfo = $("#movieInfo");
+    const moviePoster = $("#moviePoster");
+    const movieTitle = $("#movieTitle");
+    const movieConcept = $("#movieConcept");
+    const moviePlot = $("#moviePlot");
+    const ottList = $("#ottList");
+    const movieAnswerRow = $("#movieAnswerRow");
 
     let selectedCategory = null;
     let nextResolver = null;
     let isPlaying = false;
+    let typingController = null;
+    let resultFlowToken = 0;
 
     const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -655,6 +1134,28 @@
 
     function hideNextButton() {
       nextBtn.classList.remove("visible");
+    }
+
+    function showBackButton() {
+      backBtn.classList.add("visible");
+    }
+
+    function hideBackButton() {
+      backBtn.classList.remove("visible");
+    }
+
+    function showRefreshButton() {
+      refreshBtn.classList.add("visible");
+    }
+
+    function hideRefreshButton() {
+      refreshBtn.classList.remove("visible");
+    }
+
+    function hideAllNavigationButtons() {
+      hideNextButton();
+      hideBackButton();
+      hideRefreshButton();
     }
 
     function waitForNext() {
@@ -672,6 +1173,15 @@
       resolve();
     });
 
+    backBtn.addEventListener("click", () => {
+      goBackToFutureList();
+    });
+
+    refreshBtn.addEventListener("click", () => {
+      resultFlowToken++;
+      resetExperience();
+    });
+
     function setBlackMode() {
       document.body.style.background = "#000";
       document.body.style.color = "#fff";
@@ -682,6 +1192,19 @@
     function setImageBackground(element, item, useChanged = false) {
       const fallback = useChanged ? item.changed : item.fallback;
       element.style.backgroundImage = `url('${item.image}'), ${fallback}`;
+    }
+
+    function hideResultScene() {
+      resultScene.classList.remove("active", "panel-open");
+      resultScene.setAttribute("aria-hidden", "true");
+      resultPanel.classList.remove("active");
+    }
+
+    function hideMovieInfo() {
+      movieInfo.classList.remove("active");
+      movieInfo.setAttribute("aria-hidden", "true");
+      if (movieAnswerRow) movieAnswerRow.innerHTML = "";
+      hideRefreshButton();
     }
 
     function getResultForSelectedSpace(future) {
@@ -698,13 +1221,22 @@
     }
 
     function clearStage() {
-      hideNextButton();
+      hideAllNavigationButtons();
       nextResolver = null;
       textBox.textContent = "";
       subText.textContent = "";
+      textBox.classList.remove("small-title");
+      textBox.classList.remove("single-line-title");
+      textBox.classList.remove("future-question-line");
+      textBox.classList.remove("image-choice-caption");
+      subText.classList.remove("essay-text");
+      subText.classList.remove("single-line");
+      subText.classList.remove("reveal");
       choiceRow.innerHTML = "";
       answerRow.innerHTML = "";
       currentImage.classList.add("hidden");
+      currentImage.classList.remove("with-center-caption");
+      currentImage.removeAttribute("data-caption");
     }
 
     async function fadeTextOut() {
@@ -713,16 +1245,80 @@
       await sleep(650);
       textBox.textContent = "";
       subText.textContent = "";
+      textBox.classList.remove("small-title");
+      textBox.classList.remove("single-line-title");
+      textBox.classList.remove("future-question-line");
+      textBox.classList.remove("image-choice-caption");
+      subText.classList.remove("essay-text");
+      subText.classList.remove("single-line");
+      subText.classList.remove("reveal");
       textBox.classList.remove("hidden");
       subText.classList.remove("hidden");
     }
 
-    async function typeWriter(text, speed = 58) {
-      textBox.textContent = "";
+    function requestTypingSkip() {
+      if (typingController) typingController.skip = true;
+    }
+
+    stage.addEventListener("click", (event) => {
+      if (event.target.closest("#nextBtn")) return;
+      requestTypingSkip();
+    });
+
+    function appendPopChar(target, char) {
+      if (char === "\n") {
+        target.appendChild(document.createElement("br"));
+        return;
+      }
+
+      if (char === " ") {
+        target.appendChild(document.createTextNode(" "));
+        return;
+      }
+
+      const span = document.createElement("span");
+      span.className = "type-char";
+      span.textContent = char;
+      target.appendChild(span);
+    }
+
+    async function typeWriter(text, speed = 58, target = textBox) {
+      const controller = { skip: false };
+      typingController = controller;
+      target.innerHTML = "";
+
       for (const char of text) {
-        textBox.textContent += char;
+        if (controller.skip) {
+          target.textContent = text;
+          break;
+        }
+
+        appendPopChar(target, char);
         await sleep(char === " " ? speed * 0.45 : speed);
       }
+
+      if (typingController === controller) typingController = null;
+    }
+
+    function showTitlePage(title, body, bodyOnly = false) {
+      textBox.textContent = title;
+      subText.textContent = body;
+      textBox.classList.toggle("small-title", bodyOnly);
+      subText.classList.toggle("essay-text", bodyOnly);
+    }
+
+    async function showTypingTitlePage(title, body) {
+      textBox.classList.remove("small-title", "hidden");
+      textBox.classList.add("single-line-title");
+      subText.classList.remove("essay-text", "single-line", "hidden", "reveal");
+      subText.textContent = "";
+      subText.style.opacity = "0";
+
+      await typeWriter(title, 70, textBox);
+
+      subText.textContent = body;
+      subText.classList.add("reveal");
+      subText.style.opacity = "";
     }
 
     async function showButtons(target, items, className, onClick) {
@@ -755,11 +1351,22 @@
       await sleep(1180);
       setBlackMode();
 
-      await typeWriter("당신은 현대의 모습을 바꿀 수 있는 능력이 있습니다.");
+      await showTypingTitlePage(
+        "우리는 어떤 시대를 살아가고 있을까?",
+        "기술은 인간의 삶을 변화시키고\n환경은 점점 소모되어가며\n인간은 이전과 다른 방식으로 관계를 맺기 시작했습니다."
+      );
       await waitForNext();
       await fadeTextOut();
 
-      await typeWriter("어떤 현대의 모습을 보겠습니까?");
+      await showTitlePage(
+        "",
+        "영화는 오래전부터 변화의 끝에 존재할 미래를 상상해왔습니다.\n\n미래를 다룬 영화들은 공상과 예측의 발명이 아니라\n그 시대의 불안과 욕망, 인간성에 대한 질문을 담아낸 인문학적 기록입니다.\n\n우리는 영화가 보여준 미래 사회를 통해\n현재 우리가 살아가는 시대의 방향성과 인간의 선택을 다시 바라보고자 합니다.",
+        true
+      );
+      await waitForNext();
+      await fadeTextOut();
+
+      await typeWriter("당신이 바라본 현대의 풍경은?");
       await showButtons(choiceRow, categories, "choice-btn", selectCategory);
     }
 
@@ -771,20 +1378,33 @@
 
       setImageBackground(currentImage, category);
       currentImage.classList.remove("hidden");
+      currentImage.classList.remove("with-center-caption");
+      currentImage.removeAttribute("data-caption");
       await sleep(450);
-      await typeWriter(`당신은 '${category.label}'에 대한 이미지를 골랐습니다.`, 45);
-      subText.textContent = category.guide + "\n이제 이 현대의 장면에 적용할 미래의 변화를 선택하세요.";
+
+      textBox.classList.add("image-choice-caption");
+      textBox.textContent = `당신은 '${category.label}'의 풍경을 선택했습니다.`;
+      subText.classList.add("single-line");
+      subText.textContent = category.guide + " 이제 이 현대의 장면에 적용할 미래의 변화를 선택하세요.";
       await waitForNext();
 
       currentImage.classList.add("hidden");
+      currentImage.classList.remove("with-center-caption");
+      currentImage.removeAttribute("data-caption");
       await fadeTextOut();
-      await typeWriter("어떤 변화가 생긴 미래를 현대에 적용하시겠습니까?", 48);
+      textBox.classList.add("single-line-title", "future-question-line");
+      await typeWriter("미래를 바라보는 관점을 선택해주세요.", 48);
       await waitForNext();
       await fadeTextOut();
       showFutureList();
     }
 
     function showFutureList() {
+      resultFlowToken++;
+      hideResultScene();
+      hideMovieInfo();
+      hideAllNavigationButtons();
+      document.body.style.background = "#000";
       clearStage();
       futureButtons.innerHTML = "";
       futures.forEach((future, index) => {
@@ -794,7 +1414,10 @@
         btn.style.setProperty("--item-color", future.color);
         btn.style.setProperty("--thumb", `url('${future.image}')`);
         btn.style.transitionDelay = `${index * 80}ms`;
-        btn.innerHTML = `<div class="future-btn-content"><strong>${future.title}</strong><span>${future.concept}</span></div>`;
+        const tags = (future.tags || []).slice(0, 3)
+          .map((tag) => `<span class="future-tag">${tag}</span>`)
+          .join("");
+        btn.innerHTML = `<div class="future-btn-content"><strong>${future.title}</strong><div class="future-tags">${tags}</div></div>`;
         btn.addEventListener("click", () => applyFuture(future));
         futureButtons.appendChild(btn);
       });
@@ -802,47 +1425,76 @@
       futureList.setAttribute("aria-hidden", "false");
     }
 
-    async function applyFuture(future) {
-      futureList.classList.remove("active");
-      futureList.setAttribute("aria-hidden", "true");
-
-      const result = getResultForSelectedSpace(future);
-      document.body.style.background = future.changed;
-      flashImage.style.backgroundImage = `url('${future.image}'), ${future.changed}`;
-      flashImage.classList.remove("active");
-      void flashImage.offsetWidth;
-      flashImage.classList.add("active");
-
-      await sleep(1100);
-      flashImage.classList.remove("active");
+    function goBackToFutureList() {
+      resultFlowToken++;
+      nextResolver = null;
+      hideAllNavigationButtons();
+      hideResultScene();
+      hideMovieInfo();
       clearStage();
-      stage.classList.add("active");
-      stage.setAttribute("aria-hidden", "false");
-
-      setImageBackground(currentImage, future, true);
-      currentImage.classList.remove("hidden");
-      textBox.textContent = "이것이 당신이 바꾸신 미래입니다.";
-      subText.textContent = `${selectedCategory ? selectedCategory.label : "현대"}의 모습이 '${future.title}'의 미장센과 미래 상상력으로 재구성되었습니다.\n다른 미래로 바꾸시겠습니까?`;
-      showAnswerButtons();
+      showFutureList();
     }
 
-    function showAnswerButtons() {
-      answerRow.innerHTML = "";
-      const yes = document.createElement("button");
-      const no = document.createElement("button");
-      yes.type = "button";
-      no.type = "button";
-      yes.className = "answer-btn";
-      no.className = "answer-btn";
-      yes.textContent = "네";
-      no.textContent = "아니요";
-      yes.addEventListener("click", async () => {
-        clearStage();
-        document.body.style.background = "#000";
-        showFutureList();
+    async function applyFuture(future) {
+      const token = ++resultFlowToken;
+      futureList.classList.remove("active");
+      futureList.setAttribute("aria-hidden", "true");
+      hideResultScene();
+      hideMovieInfo();
+      clearStage();
+
+      const result = getResultForSelectedSpace(future);
+      document.body.style.background = "#000";
+      resultScene.style.setProperty("--result-bg", `url('${result.image}'), ${future.changed}`);
+      resultScene.classList.add("active");
+      resultScene.setAttribute("aria-hidden", "false");
+      resultPanel.classList.remove("active");
+      showBackButton();
+
+      await sleep(260);
+      if (token !== resultFlowToken) return;
+      await waitForNext();
+      if (token !== resultFlowToken) return;
+
+      resultTitle.textContent = future.title;
+      resultDescription.textContent = `${selectedCategory ? selectedCategory.label : "현대"}의 풍경이 '${future.title}'의 미래 관점으로 재해석되었습니다.
+
+${result.description}`;
+      resultScene.classList.add("panel-open");
+      await sleep(80);
+      if (token !== resultFlowToken) return;
+      resultPanel.classList.add("active");
+      showBackButton();
+
+      await waitForNext();
+      if (token !== resultFlowToken) return;
+      await showMovieInfo(future);
+    }
+
+    async function showMovieInfo(future) {
+      hideResultScene();
+      hideNextButton();
+      movieTitle.textContent = future.title;
+      movieConcept.textContent = future.concept;
+      moviePlot.textContent = future.plot || "줄거리 정보를 입력하세요.";
+      moviePoster.style.setProperty("--poster-bg", `url('${future.poster || future.image}'), linear-gradient(135deg, ${future.color}, #111)`);
+      ottList.innerHTML = "";
+      (future.ott || ["OTT 정보 입력"]).forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        ottList.appendChild(li);
       });
-      no.addEventListener("click", endExperience);
-      answerRow.append(yes, no);
+
+      if (movieAnswerRow) {
+        movieAnswerRow.innerHTML = "";
+        movieAnswerRow.setAttribute("aria-hidden", "true");
+      }
+
+      movieInfo.classList.add("active");
+      movieInfo.setAttribute("aria-hidden", "false");
+      hideNextButton();
+      showBackButton();
+      showRefreshButton();
     }
 
     async function endExperience() {
@@ -862,13 +1514,15 @@
     function resetExperience() {
       selectedCategory = null;
       isPlaying = false;
-      hideNextButton();
+      hideAllNavigationButtons();
       nextResolver = null;
       clearStage();
       stage.classList.remove("active");
       stage.setAttribute("aria-hidden", "true");
       futureList.classList.remove("active");
       futureList.setAttribute("aria-hidden", "true");
+      hideResultScene();
+      hideMovieInfo();
       closingMask.classList.remove("active");
       closingMask.style.animation = "none";
       void closingMask.offsetWidth;
