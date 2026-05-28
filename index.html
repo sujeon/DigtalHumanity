@@ -281,7 +281,7 @@
     .future-buttons:hover .future-btn,
     .future-buttons:focus-within .future-btn {
       opacity: 0.42;
-      filter: brightness(0.6) saturate(0.65) contrast(0.95);
+      filter: brightness(0.48) saturate(0.65) contrast(0.95);
     }
 
     .future-buttons .future-btn:hover,
@@ -416,14 +416,60 @@
 
     .closing-mask.active {
       opacity: 1;
-      animation: shrinkBlack 1700ms var(--ease) 3200ms forwards;
+      animation: shrinkBlack 1500ms var(--ease) 500ms forwards;
     }
 
     @keyframes shrinkBlack {
       to { transform: scale(0); border-radius: 999px; }
     }
+
+
+    .next-btn {
+      position: fixed;
+      right: clamp(22px, 4vw, 54px);
+      bottom: clamp(22px, 4vw, 54px);
+      z-index: 40;
+      width: 66px;
+      height: 66px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36);
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      transform: translateY(14px) scale(0.94);
+      pointer-events: none;
+      transition: opacity 320ms ease, transform 320ms ease, background 260ms ease, border-color 260ms ease;
+    }
+
+    .next-btn.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .next-btn:hover,
+    .next-btn:focus-visible {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.9);
+      transform: translateY(-4px) scale(1.04);
+      outline: none;
+    }
+
+    .next-btn svg {
+      width: 30px;
+      height: 30px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
   </style>
-<script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779928512806&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000eec47206b7a4b481046906d2%26fn%3Dindex_neon_hover_movie_buttons.html%26cd%3Dattachment%26ts%3D494424%26p%3Dfs%26cid%3D1%26sig%3D95ecf3566caf030cd4a0068465fa9f67fc577550f83de712a030eabe559e4be5%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779928512806&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<script type="text/javascript" nonce="14670706ddfd4fee987dadf31fb" src="//local.adguard.org?ts=1779931512199&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000005528720683476ee224c37fec%26fn%3Dindex_all_manual_arrows.html%26cd%3Dattachment%26ts%3D494425%26p%3Dfs%26cid%3D1%26sig%3D1d6310d1c7899b0f73bcbc766d882567b0791827b05ddb73dbd5b7dbae44296e%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="14670706ddfd4fee987dadf31fb" src="//local.adguard.org?ts=1779931512199&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
@@ -451,6 +497,12 @@
 
     <div id="flashImage" class="flash-image"></div>
     <div id="closingMask" class="closing-mask"></div>
+    <button id="nextBtn" class="next-btn" type="button" aria-label="다음 장면으로 이동">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 12h13" />
+        <path d="m13 6 6 6-6 6" />
+      </svg>
+    </button>
   </main>
 
   <script>
@@ -589,11 +641,36 @@
     const futureButtons = $("#futureButtons");
     const flashImage = $("#flashImage");
     const closingMask = $("#closingMask");
+    const nextBtn = $("#nextBtn");
 
     let selectedCategory = null;
+    let nextResolver = null;
     let isPlaying = false;
 
     const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    function showNextButton() {
+      nextBtn.classList.add("visible");
+    }
+
+    function hideNextButton() {
+      nextBtn.classList.remove("visible");
+    }
+
+    function waitForNext() {
+      showNextButton();
+      return new Promise((resolve) => {
+        nextResolver = resolve;
+      });
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!nextResolver) return;
+      const resolve = nextResolver;
+      nextResolver = null;
+      hideNextButton();
+      resolve();
+    });
 
     function setBlackMode() {
       document.body.style.background = "#000";
@@ -621,6 +698,8 @@
     }
 
     function clearStage() {
+      hideNextButton();
+      nextResolver = null;
       textBox.textContent = "";
       subText.textContent = "";
       choiceRow.innerHTML = "";
@@ -677,7 +756,7 @@
       setBlackMode();
 
       await typeWriter("당신은 현대의 모습을 바꿀 수 있는 능력이 있습니다.");
-      await sleep(900);
+      await waitForNext();
       await fadeTextOut();
 
       await typeWriter("어떤 현대의 모습을 보겠습니까?");
@@ -695,12 +774,12 @@
       await sleep(450);
       await typeWriter(`당신은 '${category.label}'에 대한 이미지를 골랐습니다.`, 45);
       subText.textContent = category.guide + "\n이제 이 현대의 장면에 적용할 미래의 변화를 선택하세요.";
-      await sleep(2200);
+      await waitForNext();
 
       currentImage.classList.add("hidden");
       await fadeTextOut();
       await typeWriter("어떤 변화가 생긴 미래를 현대에 적용하시겠습니까?", 48);
-      await sleep(1000);
+      await waitForNext();
       await fadeTextOut();
       showFutureList();
     }
@@ -727,6 +806,7 @@
       futureList.classList.remove("active");
       futureList.setAttribute("aria-hidden", "true");
 
+      const result = getResultForSelectedSpace(future);
       document.body.style.background = future.changed;
       flashImage.style.backgroundImage = `url('${future.image}'), ${future.changed}`;
       flashImage.classList.remove("active");
@@ -769,18 +849,21 @@
       clearStage();
       document.body.style.background = "#000";
       await typeWriter("미래는 언제나 바뀔 수 있으며\n당신은 디지털 인문학을 통해 분석 및 해석할 수 있습니다.", 50);
-      await sleep(1000);
+      await waitForNext();
       await fadeTextOut();
       await typeWriter("감사합니다.", 70);
+      await waitForNext();
 
       closingMask.classList.add("active");
-      await sleep(4800);
+      await sleep(2100);
       resetExperience();
     }
 
     function resetExperience() {
       selectedCategory = null;
       isPlaying = false;
+      hideNextButton();
+      nextResolver = null;
       clearStage();
       stage.classList.remove("active");
       stage.setAttribute("aria-hidden", "true");
