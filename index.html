@@ -209,12 +209,12 @@
 
     /* 영화 선택 버튼: 세로로 길쭉한 스틸컷 카드 */
     .future-buttons {
-      width: min(1180px, 94vw);
-      height: min(62vh, 620px);
+      width: min(1240px, 94vw);
+      height: min(64vh, 650px);
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(5, minmax(130px, 1fr));
-      gap: clamp(12px, 1.7vw, 24px);
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap: clamp(18px, 2vw, 30px);
       align-items: stretch;
       perspective: 1200px;
     }
@@ -223,7 +223,7 @@
       --item-color: #555;
       position: relative;
       height: 100%;
-      min-height: 430px;
+      min-height: 450px;
       padding: 0;
       overflow: hidden;
       border: 2px solid color-mix(in srgb, var(--item-color), #ffffff 18%);
@@ -251,7 +251,7 @@
       inset: 12px;
       border-radius: 22px;
       background-image:
-        linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 48%, rgba(0, 0, 0, 0.82) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.12) 46%, rgba(0, 0, 0, 0.72) 100%),
         var(--thumb),
         linear-gradient(135deg, var(--item-color), #111);
       background-size: cover;
@@ -269,50 +269,69 @@
         linear-gradient(90deg, color-mix(in srgb, var(--item-color), transparent 20%), transparent 26%, transparent 74%, color-mix(in srgb, var(--item-color), transparent 20%)),
         radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--item-color), transparent 28%), transparent 46%);
       mix-blend-mode: screen;
-      opacity: 0.55;
+      opacity: 0.45;
       pointer-events: none;
     }
 
     .future-btn:hover,
     .future-btn:focus-visible {
-      transform: translateY(-18px) scale(1.08);
+      transform: translateY(-16px) scale(1.045);
       border-color: color-mix(in srgb, var(--item-color), #ffffff 45%);
       box-shadow:
         0 36px 90px rgba(0, 0, 0, 0.56),
         0 0 70px color-mix(in srgb, var(--item-color), transparent 34%);
-      z-index: 3;
+      z-index: 10;
       filter: saturate(1.08) contrast(1.04);
     }
 
     .future-btn:hover::before,
     .future-btn:focus-visible::before {
-      transform: scale(1.16);
-      filter: saturate(1.25) contrast(1.08);
+      transform: scale(1.1);
+      filter: saturate(1.22) contrast(1.08);
+    }
+
+    .future-btn-content {
+      position: absolute;
+      z-index: 2;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      min-height: 150px;
+      padding: 18px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 10px;
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg,
+          rgba(0, 0, 0, 0.18) 0%,
+          rgba(0, 0, 0, 0.66) 42%,
+          rgba(0, 0, 0, 0.88) 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(2px);
     }
 
     .future-btn strong,
     .future-btn span {
-      position: absolute;
-      z-index: 2;
-      left: 24px;
-      right: 24px;
+      position: static;
       display: block;
+      margin: 0;
       text-shadow: 0 8px 26px rgba(0, 0, 0, 0.8);
       word-break: keep-all;
+      overflow-wrap: anywhere;
     }
 
     .future-btn strong {
-      bottom: 82px;
-      font-size: clamp(1.25rem, 2vw, 1.85rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
+      font-size: clamp(1.1rem, 1.5vw, 1.55rem);
+      line-height: 1.12;
+      letter-spacing: -0.045em;
     }
 
     .future-btn span {
-      bottom: 28px;
-      color: rgba(255, 255, 255, 0.78);
-      font-size: clamp(0.84rem, 1.2vw, 1rem);
-      line-height: 1.42;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: clamp(0.78rem, 0.95vw, 0.92rem);
+      line-height: 1.45;
     }
 
     @media (max-width: 980px) {
@@ -385,7 +404,7 @@
       to { transform: scale(0); border-radius: 999px; }
     }
   </style>
-<script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000080607206a1cae69693eec17c%26fn%3Dindex_space_specific_movie_results.html%26cd%3Dattachment%26ts%3D494423%26p%3Dfs%26cid%3D1%26sig%3Dee6d6a58c98b8048f7af98ce1f207f35057da7e159195d5267fd4f871af789ba%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000006e407206ab55e5265c284910%26fn%3Dindex_text_overlap_fixed.html%26cd%3Dattachment%26ts%3D494424%26p%3Dfs%26cid%3D1%26sig%3D6d3ba7512cf46fd24fa840fb24533ac0ab3b3ca112654737e216ec4d12b039e8%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
@@ -677,7 +696,7 @@
         btn.style.setProperty("--item-color", future.color);
         btn.style.setProperty("--thumb", `url('${future.image}')`);
         btn.style.transitionDelay = `${index * 80}ms`;
-        btn.innerHTML = `<strong>${future.title}</strong><span>${future.concept}</span>`;
+        btn.innerHTML = `<div class="future-btn-content"><strong>${future.title}</strong><span>${future.concept}</span></div>`;
         btn.addEventListener("click", () => applyFuture(future));
         futureButtons.appendChild(btn);
       });
