@@ -225,69 +225,88 @@
       height: 100%;
       min-height: 450px;
       padding: 0;
-      overflow: hidden;
-      border: 2px solid color-mix(in srgb, var(--item-color), #ffffff 18%);
+      overflow: visible;
+      border: 0;
       border-radius: 30px;
       text-align: left;
       color: #fff;
       background:
         linear-gradient(180deg,
-          color-mix(in srgb, var(--item-color), #ffffff 16%) 0%,
-          color-mix(in srgb, var(--item-color), #000000 34%) 48%,
+          color-mix(in srgb, var(--item-color), #ffffff 12%) 0%,
+          color-mix(in srgb, var(--item-color), #000000 42%) 48%,
           #050505 100%);
-      box-shadow:
-        0 24px 60px rgba(0, 0, 0, 0.42),
-        0 0 34px color-mix(in srgb, var(--item-color), transparent 58%);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
       transition:
         transform 480ms var(--ease),
-        border-color 300ms ease,
-        box-shadow 300ms ease,
-        filter 300ms ease;
+        box-shadow 340ms ease,
+        filter 340ms ease,
+        opacity 340ms ease;
     }
 
     .future-btn::before {
       content: "";
       position: absolute;
-      inset: 12px;
-      border-radius: 22px;
+      inset: 0;
+      border-radius: inherit;
       background-image:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.12) 46%, rgba(0, 0, 0, 0.72) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.12) 46%, rgba(0, 0, 0, 0.74) 100%),
         var(--thumb),
         linear-gradient(135deg, var(--item-color), #111);
       background-size: cover;
       background-position: center;
       transform: scale(1);
-      transition: transform 520ms var(--ease), filter 300ms ease;
+      transition: transform 520ms var(--ease), filter 340ms ease;
     }
 
     .future-btn::after {
       content: "";
       position: absolute;
-      inset: 0;
-      border-radius: inherit;
+      inset: -16px;
+      border-radius: 38px;
       background:
-        linear-gradient(90deg, color-mix(in srgb, var(--item-color), transparent 20%), transparent 26%, transparent 74%, color-mix(in srgb, var(--item-color), transparent 20%)),
-        radial-gradient(circle at 50% 12%, color-mix(in srgb, var(--item-color), transparent 28%), transparent 46%);
-      mix-blend-mode: screen;
-      opacity: 0.45;
+        radial-gradient(circle at 50% 8%, color-mix(in srgb, var(--item-color), transparent 30%), transparent 42%),
+        linear-gradient(90deg,
+          transparent 0%,
+          color-mix(in srgb, var(--item-color), transparent 34%) 18%,
+          color-mix(in srgb, var(--item-color), transparent 64%) 50%,
+          color-mix(in srgb, var(--item-color), transparent 34%) 82%,
+          transparent 100%);
+      opacity: 0;
+      filter: blur(14px);
       pointer-events: none;
+      transition: opacity 340ms ease, filter 340ms ease;
+      z-index: -1;
     }
 
-    .future-btn:hover,
-    .future-btn:focus-visible {
-      transform: translateY(-16px) scale(1.045);
-      border-color: color-mix(in srgb, var(--item-color), #ffffff 45%);
+    .future-buttons:hover .future-btn,
+    .future-buttons:focus-within .future-btn {
+      opacity: 0.42;
+      filter: brightness(0.6) saturate(0.65) contrast(0.95);
+    }
+
+    .future-buttons .future-btn:hover,
+    .future-buttons .future-btn:focus-visible {
+      opacity: 1;
+      transform: translateY(-18px) scale(1.055);
       box-shadow:
-        0 36px 90px rgba(0, 0, 0, 0.56),
-        0 0 70px color-mix(in srgb, var(--item-color), transparent 34%);
+        0 40px 100px rgba(0, 0, 0, 0.66),
+        0 0 18px color-mix(in srgb, var(--item-color), #ffffff 28%),
+        0 0 42px color-mix(in srgb, var(--item-color), transparent 10%),
+        0 0 90px color-mix(in srgb, var(--item-color), transparent 36%);
       z-index: 10;
-      filter: saturate(1.08) contrast(1.04);
+      filter: brightness(1.12) saturate(1.24) contrast(1.08);
     }
 
     .future-btn:hover::before,
     .future-btn:focus-visible::before {
-      transform: scale(1.1);
-      filter: saturate(1.22) contrast(1.08);
+      transform: scale(1.08);
+      filter: saturate(1.3) contrast(1.1);
+    }
+
+    .future-btn:hover::after,
+    .future-btn:focus-visible::after {
+      opacity: 1;
+      filter: blur(18px);
     }
 
     .future-btn-content {
@@ -404,7 +423,7 @@
       to { transform: scale(0); border-radius: 999px; }
     }
   </style>
-<script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000006e407206ab55e5265c284910%26fn%3Dindex_text_overlap_fixed.html%26cd%3Dattachment%26ts%3D494424%26p%3Dfs%26cid%3D1%26sig%3D6d3ba7512cf46fd24fa840fb24533ac0ab3b3ca112654737e216ec4d12b039e8%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779925450826&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779928512806&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000eec47206b7a4b481046906d2%26fn%3Dindex_neon_hover_movie_buttons.html%26cd%3Dattachment%26ts%3D494424%26p%3Dfs%26cid%3D1%26sig%3D95ecf3566caf030cd4a0068465fa9f67fc577550f83de712a030eabe559e4be5%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="448d80bceca54d7c9077e88f5ad" src="//local.adguard.org?ts=1779928512806&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
