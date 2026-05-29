@@ -690,13 +690,52 @@
     }
 
     .ott-list li {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.58);
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
-      color: rgba(0,0,0,0.76);
-      font-size: 0.92rem;
+      display: block;
     }
+
+    .ott-link {
+      min-height: 48px;
+      padding: 8px 14px 8px 9px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(0,0,0,0.78);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.62);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.08);
+      transition: transform 260ms ease, background 260ms ease, box-shadow 260ms ease;
+    }
+
+    .ott-link:hover,
+    .ott-link:focus-visible {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.16), 0 18px 42px rgba(0,0,0,0.16);
+      outline: none;
+    }
+
+    .ott-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      color: #fff;
+      background: #111;
+      font-size: 0.78rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .ott-link[data-service="Netflix"] .ott-icon { background: #e50914; }
+    .ott-link[data-service="Disney+"] .ott-icon { background: #113ccf; }
+    .ott-link[data-service="Google TV"] .ott-icon { background: #4285f4; }
+    .ott-link[data-service="Watcha"] .ott-icon { background: #ff0558; }
 
     .movie-answer-row {
       justify-content: flex-start;
@@ -977,8 +1016,369 @@
       }
     }
 
+  
+
+    /* 현대 풍경 이미지 페이지: 이미지/문구 묶음을 화면 중앙에 위아래 균형 있게 배치 */
+    .stage > div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stage.modern-preview {
+      padding-top: clamp(54px, 7vh, 92px);
+      padding-bottom: clamp(54px, 7vh, 92px);
+    }
+
+    .stage.modern-preview > div {
+      min-height: 100%;
+      justify-content: center;
+    }
+
+    .stage.modern-preview .current-image {
+      margin: 0 auto clamp(22px, 3vh, 34px);
+    }
+
+    .stage.modern-preview .text-box.image-choice-caption {
+      margin: 0 auto clamp(14px, 2vh, 20px);
+    }
+
+    .stage.modern-preview .sub-text.single-line {
+      margin: 0 auto;
+    }
+
+    /* 영화 버튼 하단 텍스트 박스: 제목과 해시태그를 박스 중앙 정렬 */
+    .future-btn-content {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .future-btn strong,
+    .future-btn span {
+      text-align: center;
+    }
+
+    .future-tags {
+      align-items: center;
+      width: 100%;
+    }
+
+    .future-tag {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+
+    /* 현대 풍경 확인 페이지: 이미지 + 선택 문구 + 설명 전체 묶음을 화면 정중앙에 배치 */
+    .stage.modern-preview {
+      padding: clamp(30px, 6vh, 70px) clamp(22px, 4vw, 54px);
+    }
+
+    .stage.modern-preview > div {
+      width: min(94vw, 1120px);
+      height: 100%;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto auto auto;
+      align-content: center;
+      justify-items: center;
+      row-gap: clamp(12px, 2.1vh, 24px);
+    }
+
+    .stage.modern-preview .current-image {
+      width: min(94vw, 1120px);
+      height: min(54vh, 560px);
+      margin: 0;
+    }
+
+    .stage.modern-preview .text-box.image-choice-caption {
+      margin: 0;
+    }
+
+    .stage.modern-preview .sub-text.single-line {
+      margin: 0;
+      max-width: min(94vw, 1120px);
+      text-align: center;
+    }
+
+
+    /* 텍스트가 나중에 나타나도 이미지가 위로 밀리지 않도록 공간을 먼저 확보 */
+    .reserve-space {
+      visibility: hidden !important;
+      opacity: 0 !important;
+      transform: none !important;
+      pointer-events: none !important;
+    }
+
+
+
+    /* 최종 보정: 풍경 이미지 확인 페이지 전체 묶음을 실제 화면 중앙에 고정 */
+    .stage.modern-preview {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 clamp(22px, 4vw, 54px) !important;
+    }
+
+    .stage.modern-preview > div {
+      width: min(94vw, 1120px) !important;
+      height: auto !important;
+      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: clamp(14px, 2vh, 24px) !important;
+      margin: 0 auto !important;
+    }
+
+    .stage.modern-preview .current-image {
+      width: min(94vw, 1120px) !important;
+      height: min(50vh, 500px) !important;
+      margin: 0 !important;
+      flex: 0 0 auto !important;
+    }
+
+    .stage.modern-preview .text-box.image-choice-caption {
+      margin: 0 !important;
+      flex: 0 0 auto !important;
+    }
+
+    .stage.modern-preview .sub-text.single-line {
+      margin: 0 !important;
+      flex: 0 0 auto !important;
+      max-width: min(94vw, 1120px) !important;
+      text-align: center !important;
+    }
+
+
+
+    /* 추가 보정: 풍경 확인 페이지의 이미지 박스를 더 길게 만들어 위아래 공백을 균형 있게 맞춤 */
+    .stage.modern-preview {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 0 clamp(22px, 4vw, 54px) !important;
+    }
+
+    .stage.modern-preview > div {
+      width: min(94vw, 1120px) !important;
+      height: 100vh !important;
+      min-height: 100vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: clamp(16px, 2.1vh, 24px) !important;
+      margin: 0 auto !important;
+    }
+
+    .stage.modern-preview .current-image {
+      width: min(94vw, 1120px) !important;
+      height: clamp(500px, 66vh, 640px) !important;
+      margin: 0 !important;
+      flex: 0 0 auto !important;
+    }
+
+    .stage.modern-preview .text-box.image-choice-caption {
+      margin: 0 !important;
+      flex: 0 0 auto !important;
+    }
+
+    .stage.modern-preview .sub-text.single-line {
+      margin: 0 !important;
+      flex: 0 0 auto !important;
+      max-width: min(94vw, 1120px) !important;
+      text-align: center !important;
+    }
+
+    @media (max-height: 760px) {
+      .stage.modern-preview .current-image {
+        height: clamp(360px, 58vh, 480px) !important;
+      }
+
+      .stage.modern-preview .text-box.image-choice-caption {
+        font-size: clamp(1.1rem, 2.25vw, 2.35rem) !important;
+      }
+
+      .stage.modern-preview .sub-text.single-line {
+        font-size: clamp(0.72rem, 1vw, 0.92rem) !important;
+      }
+    }
+
+
+    /* 하단 공백 보정: 풍경 확인 페이지 전체 묶음을 살짝 아래로 내려 텍스트 아래 여백을 줄임 */
+    .stage.modern-preview > div {
+      transform: translateY(clamp(28px, 4.5vh, 56px)) !important;
+    }
+
+    .stage.modern-preview .sub-text.single-line {
+      margin-bottom: 0 !important;
+    }
+
+    @media (max-height: 760px) {
+      .stage.modern-preview > div {
+        transform: translateY(clamp(14px, 2.8vh, 28px)) !important;
+      }
+    }
+
+    @media (max-height: 640px) {
+      .stage.modern-preview > div {
+        transform: translateY(8px) !important;
+      }
+    }
+
+
+    /* OTT 아이콘 링크: PNG 아이콘 크기 통일 */
+    .ott-link {
+      min-height: 54px;
+      padding: 8px 16px 8px 10px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(0,0,0,0.78);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.62);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08), 0 12px 28px rgba(0,0,0,0.08);
+      transition: transform 260ms ease, background 260ms ease, box-shadow 260ms ease;
+    }
+
+    .ott-link:hover,
+    .ott-link:focus-visible {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.16), 0 18px 42px rgba(0,0,0,0.16);
+      outline: none;
+    }
+
+    .ott-icon,
+    .ott-icon-img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      flex: 0 0 38px;
+    }
+
+    .ott-icon {
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: #111;
+      font-size: 0.78rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .ott-icon-img {
+      display: block;
+      padding: 6px;
+      background: rgba(255, 255, 255, 0.92);
+      object-fit: contain;
+      object-position: center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+    }
+
+    .ott-icon-img.wide {
+      width: 86px;
+      height: 38px;
+      flex-basis: 86px;
+      border-radius: 12px;
+      padding: 7px 10px;
+    }
+
+    .ott-icon-img.square {
+      width: 38px;
+      height: 38px;
+      flex-basis: 38px;
+      border-radius: 12px;
+    }
+
+    .ott-link[data-service="Netflix"] .ott-icon { background: #e50914; }
+    .ott-link[data-service="Disney+"] .ott-icon { background: #113ccf; }
+    .ott-link[data-service="Google TV"] .ott-icon { background: #4285f4; }
+    .ott-link[data-service="Watcha"] .ott-icon { background: #ff0558; }
+
+
+    /* OTT 아이콘만 표시하는 버튼 */
+    .ott-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ott-link.icon-only {
+      width: 58px;
+      height: 58px;
+      min-height: 0;
+      padding: 8px;
+      border-radius: 18px;
+      display: inline-grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,0.08),
+        0 12px 28px rgba(0,0,0,0.10);
+      transition: transform 260ms ease, background 260ms ease, box-shadow 260ms ease;
+    }
+
+    .ott-link.icon-only:hover,
+    .ott-link.icon-only:focus-visible {
+      transform: translateY(-4px) scale(1.06);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow:
+        inset 0 0 0 1px rgba(0,0,0,0.18),
+        0 18px 42px rgba(0,0,0,0.18);
+      outline: none;
+    }
+
+    .ott-link.icon-only .ott-icon-img {
+      width: 100%;
+      height: 100%;
+      flex: none;
+      padding: 4px;
+      border-radius: 12px;
+      background: transparent;
+      object-fit: contain;
+      object-position: center;
+      box-shadow: none;
+    }
+
+    .ott-link.icon-only .ott-icon-img.wide {
+      width: 100%;
+      height: 100%;
+      flex-basis: auto;
+      border-radius: 12px;
+      padding: 4px;
+    }
+
+    .ott-link.icon-only .ott-icon-img.square {
+      width: 100%;
+      height: 100%;
+      flex-basis: auto;
+      border-radius: 12px;
+      padding: 4px;
+    }
+
+    .ott-link.icon-only .ott-icon {
+      width: 100%;
+      height: 100%;
+      flex: none;
+      border-radius: 12px;
+    }
+
   </style>
-<script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1779964155914&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000068ec7209b8e0b67902c9c901%26fn%3Dindex_movie_buttons_width_fixed.html%26cd%3Dattachment%26ts%3D494434%26p%3Dfs%26cid%3D1%26sig%3Dd8f30343c2ae65ed9cf4552e7c381ce5bcb33638d4ae5448ca00661aeb5f698d%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1779964155914&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;name=Web%20of%20Trust&amp;type=user-script"></script></head>
+<script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1780020079472&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000404c72068c1eb68733d7e458%26fn%3Dindex_ott_manual_urls.html%26cd%3Dattachment%26ts%3D494450%26p%3Dfs%26cid%3D1%26sig%3De16dbb95d1202f1cfc0443219c167bf96ee77bc46c5a4da00bc845ab04a9c5ca%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1780020079472&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;name=Web%20of%20Trust&amp;type=user-script"></script><script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1780009151803&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000d60472098c42eac2aebdc09e%26fn%3Dindex_ott_icon_links.html%26cd%3Dattachment%26ts%3D494447%26p%3Dfs%26cid%3D1%26sig%3D081568c11594ff659040cea5137b7099435b61aaced1bb7adb001a76661818b0%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1780009151803&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;name=Web%20of%20Trust&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
@@ -1062,6 +1462,27 @@
       2) button-영화명.jpg는 영화 버튼에 보이는 스틸컷/포스터 이미지다.
       3) result-영화명-city/home/school.jpg는 도시, 가정, 학교 선택에 따라 결과 화면에 보이는 이미지다.
       4) 파일이 없어도 그라데이션 배경으로 임시 표시된다.
+
+      OTT 아이콘 PNG를 연결하는 방법
+      - iconImage: "./assets/images/ott-netflix.png" 처럼 이미지 경로를 입력한다.
+      - iconClass: "wide" 또는 "square"로 로고 형태에 맞는 크기를 고른다.
+      - url: 아이콘만 눌러도 새 탭으로 이동할 링크를 입력한다.
+
+      OTT URL을 직접 넣는 방법
+      - makeOtt("Netflix", "여기에 실제 Netflix 주소")
+      - makeOtt("Watcha", "여기에 실제 Watcha 주소")
+      - makeOtt("Tving", "여기에 실제 Tving 주소")
+      - makeOtt("Coupang Play", "여기에 실제 Coupang Play 주소")
+      - makeOtt("Wavve", "여기에 실제 Wavve 주소")
+      - makeOtt("Disney+", "여기에 실제 Disney+ 주소")
+
+      OTT 아이콘 파일명
+      - ott-netflix.png
+      - ott-watcha.png
+      - ott-tving.png
+      - ott-coupang-play.png
+      - ott-wavve.png
+      - ott-disney-plus.png
     */
 
     const categories = [
@@ -1088,6 +1509,43 @@
       }
     ];
 
+
+    function makeOtt(name, url) {
+      const serviceMap = {
+        "Netflix": {
+          iconImage: "./assets/images/ott-netflix.png",
+          iconClass: "wide"
+        },
+        "Watcha": {
+          iconImage: "./assets/images/ott-watcha.png",
+          iconClass: "wide"
+        },
+        "Tving": {
+          iconImage: "./assets/images/ott-tving.png",
+          iconClass: "wide"
+        },
+        "Coupang Play": {
+          iconImage: "./assets/images/ott-coupang-play.png",
+          iconClass: "wide"
+        },
+        "Wavve": {
+          iconImage: "./assets/images/ott-wavve.png",
+          iconClass: "wide"
+        },
+        "Disney+": {
+          iconImage: "./assets/images/ott-disney-plus.png",
+          iconClass: "wide"
+        }
+      };
+
+      return {
+        name,
+        iconImage: serviceMap[name]?.iconImage || "./assets/images/ott-default.png",
+        iconClass: serviceMap[name]?.iconClass || "square",
+        url: url || "#"
+      };
+    }
+
     const futures = [
       {
         title: "설국열차",
@@ -1097,7 +1555,12 @@
         image: "./assets/images/button-snowpiercer.jpg",
         poster: "./assets/images/poster-snowpiercer.jpg",
         plot: "기후 실험 실패로 지구가 얼어붙은 뒤, 살아남은 인류는 멈추지 않는 열차 안에서 계급에 따라 나뉘어 살아갑니다. 꼬리칸 사람들은 억압된 질서에 맞서 앞칸으로 이동하며 세계의 구조와 권력의 실체를 마주합니다.",
-        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
+        ott: [
+          makeOtt("Netflix", "https://www.netflix.com/title/70270364"),
+          makeOtt("Watcha", "https://watcha.com/contents/mO02n15"),
+          makeOtt("Tving", "https://www.tving.com/contents/M000232837"),
+          makeOtt("Wavve", "https://www.wavve.com/player/movie?movieid=MV_EN01_EN000000015")
+        ],
         changed: "linear-gradient(135deg, #06111a, #9fb7c7 48%, #f2f7fb)",
         resultImages: {
           city: "./assets/images/result-snowpiercer-city.jpg",
@@ -1118,7 +1581,10 @@
         image: "./assets/images/button-blade-runner-2049.jpg",
         poster: "./assets/images/poster-blade-runner-2049.jpg",
         plot: "인간과 복제인간의 경계가 흐려진 미래 도시에서, 블레이드 러너 K는 오래 숨겨진 비밀을 추적합니다. 기억, 정체성, 인간다움에 대한 질문이 네온과 폐허의 미장센 속에서 확장됩니다.",
-        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
+        ott: [
+          makeOtt("Watcha", "https://watcha.com/ko-KR/contents/m5ng0DW"),
+          makeOtt("Coupang Play", "https://www.coupangplay.com/titles/a0313ba6-a34f-41e5-928f-1da585e40a9e")
+        ],
         changed: "linear-gradient(135deg, #090713, #c04cf0 45%, #f08a24)",
         resultImages: {
           city: "./assets/images/result-blade-runner-2049-city.jpg",
@@ -1139,7 +1605,10 @@
         image: "./assets/images/button-matrix.jpg",
         poster: "./assets/images/poster-matrix.jpg",
         plot: "평범한 현실을 살아가던 네오는 자신이 믿어온 세계가 거대한 가상 시스템이라는 사실을 알게 됩니다. 그는 현실과 통제, 자유의지에 대한 질문 속에서 시스템에 맞서는 선택을 하게 됩니다.",
-        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
+        ott: [
+          makeOtt("Coupang Play", "https://www.coupangplay.com/titles/b81784ea-3957-4495-9b73-68b9945ac205"),
+          makeOtt("Wavve", "https://www.wavve.com/player/movie?movieid=MV_CD01_WR0000011314")
+        ],
         changed: "linear-gradient(135deg, #031007, #2bb35f 50%, #071d10)",
         resultImages: {
           city: "./assets/images/result-matrix-city.jpg",
@@ -1160,7 +1629,9 @@
         image: "./assets/images/button-walle.jpg",
         poster: "./assets/images/poster-walle.jpg",
         plot: "쓰레기로 뒤덮인 지구에 홀로 남은 청소 로봇 월-E는 새로운 생명의 가능성을 발견합니다. 편리함과 소비에 익숙해진 인간 사회가 잃어버린 지구와 관계를 다시 돌아보게 만드는 이야기입니다.",
-        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
+        ott: [
+          makeOtt("Disney+", "https://www.disneyplus.com/ko-kr/browse/entity-280395a4-d5ef-4dd0-bd09-d91c31593d3d")
+        ],
         changed: "linear-gradient(135deg, #2c2418, #c9a35a 48%, #6b8f87)",
         resultImages: {
           city: "./assets/images/result-walle-city.jpg",
@@ -1176,12 +1647,14 @@
       {
         title: "Mad Max",
         concept: "자원 고갈 이후 황폐한 사막과 생존 경쟁으로 재편된 미래",
-        tags: ["#자원고갈", "#핵전쟁", "#문명붕괴"],
+        tags: ["#자원고갈", "#생존경쟁", "#문명붕괴"],
         color: "#d86f24",
         image: "./assets/images/button-madmax.jpg",
         poster: "./assets/images/poster-madmax.jpg",
         plot: "자원이 고갈된 사막 세계에서 물과 연료는 권력이 됩니다. 맥스와 퓨리오사는 폭력적 지배 체제에서 벗어나기 위해 질주하며, 생존과 해방의 가능성을 찾아갑니다.",
-        ott: ["OTT 정보 입력", "대여/구매 정보 입력"],
+        ott: [
+          makeOtt("Coupang Play", "https://www.coupangplay.com/titles/7756c9ed-6c12-4324-89da-4c1baf3ea282")
+        ],
         changed: "linear-gradient(135deg, #211006, #d86f24 50%, #f2c06b)",
         resultImages: {
           city: "./assets/images/result-madmax-city.jpg",
@@ -1325,6 +1798,7 @@
     }
 
     function clearStage() {
+      stage.classList.remove("modern-preview");
       hideAllNavigationButtons();
       nextResolver = null;
       textBox.textContent = "";
@@ -1333,11 +1807,14 @@
       textBox.classList.remove("single-line-title");
       textBox.classList.remove("future-question-line");
       textBox.classList.remove("image-choice-caption");
+      textBox.classList.remove("reserve-space");
       subText.classList.remove("essay-text");
       subText.classList.remove("single-line");
       subText.classList.remove("reveal");
+      subText.classList.remove("reserve-space");
       choiceRow.innerHTML = "";
       answerRow.innerHTML = "";
+      stage.classList.remove("modern-preview");
       currentImage.classList.add("hidden");
       currentImage.classList.remove("with-center-caption");
       currentImage.removeAttribute("data-caption");
@@ -1353,6 +1830,7 @@
       textBox.classList.remove("single-line-title");
       textBox.classList.remove("future-question-line");
       textBox.classList.remove("image-choice-caption");
+      textBox.classList.remove("reserve-space");
       subText.classList.remove("essay-text");
       subText.classList.remove("single-line");
       subText.classList.remove("reveal");
@@ -1480,18 +1958,26 @@
       choiceRow.innerHTML = "";
       await fadeTextOut();
 
+      stage.classList.add("modern-preview");
+
+      // 텍스트 영역을 먼저 숨긴 상태로 배치해서,
+      // 나중에 글자가 나타나도 이미지 박스가 위로 밀리지 않게 합니다.
+      textBox.classList.add("image-choice-caption", "reserve-space");
+      textBox.textContent = `당신은 '${category.label}'의 풍경을 선택했습니다.`;
+      subText.classList.add("single-line", "reserve-space");
+      subText.textContent = category.guide + " 이제 이 현대의 장면에 적용할 미래의 변화를 선택하세요.";
+
       setImageBackground(currentImage, category);
       currentImage.classList.remove("hidden");
       currentImage.classList.remove("with-center-caption");
       currentImage.removeAttribute("data-caption");
       await sleep(450);
 
-      textBox.classList.add("image-choice-caption");
-      textBox.textContent = `당신은 '${category.label}'의 풍경을 선택했습니다.`;
-      subText.classList.add("single-line");
-      subText.textContent = category.guide + " 이제 이 현대의 장면에 적용할 미래의 변화를 선택하세요.";
+      textBox.classList.remove("reserve-space");
+      subText.classList.remove("reserve-space");
       await waitForNext();
 
+      stage.classList.remove("modern-preview");
       currentImage.classList.add("hidden");
       currentImage.classList.remove("with-center-caption");
       currentImage.removeAttribute("data-caption");
@@ -1584,9 +2070,35 @@ ${result.description}`;
       moviePlot.textContent = future.plot || "줄거리 정보를 입력하세요.";
       moviePoster.style.setProperty("--poster-bg", `url('${future.poster || future.image}'), linear-gradient(135deg, ${future.color}, #111)`);
       ottList.innerHTML = "";
-      (future.ott || ["OTT 정보 입력"]).forEach((item) => {
+      (future.ott || []).forEach((item) => {
+        const info = typeof item === "string" ? { name: item, icon: item.slice(0, 1), url: "#" } : item;
         const li = document.createElement("li");
-        li.textContent = item;
+        const link = document.createElement("a");
+        link.className = "ott-link icon-only";
+        link.href = info.url || "#";
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.setAttribute("data-service", info.name || "OTT");
+        link.setAttribute("aria-label", `${info.name || "OTT"} 사이트로 이동`);
+
+        let icon;
+        if (info.iconImage) {
+          icon = document.createElement("img");
+          icon.className = `ott-icon-img ${info.iconClass || ""}`.trim();
+          icon.src = info.iconImage;
+          icon.alt = `${info.name || "OTT"} 아이콘`;
+          icon.loading = "lazy";
+        } else {
+          icon = document.createElement("span");
+          icon.className = "ott-icon";
+          icon.textContent = info.icon || (info.name || "O").slice(0, 1);
+        }
+
+        link.title = info.name || "OTT";
+        link.setAttribute("aria-label", `${info.name || "OTT"}에서 보기`);
+
+        link.append(icon);
+        li.appendChild(link);
         ottList.appendChild(li);
       });
 
