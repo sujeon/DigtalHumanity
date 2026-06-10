@@ -1377,8 +1377,174 @@
       border-radius: 12px;
     }
 
-  </style>
-<script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1780020079472&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000404c72068c1eb68733d7e458%26fn%3Dindex_ott_manual_urls.html%26cd%3Dattachment%26ts%3D494450%26p%3Dfs%26cid%3D1%26sig%3De16dbb95d1202f1cfc0443219c167bf96ee77bc46c5a4da00bc845ab04a9c5ca%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1780020079472&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;name=Web%20of%20Trust&amp;type=user-script"></script><script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1780009151803&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000d60472098c42eac2aebdc09e%26fn%3Dindex_ott_icon_links.html%26cd%3Dattachment%26ts%3D494447%26p%3Dfs%26cid%3D1%26sig%3D081568c11594ff659040cea5137b7099435b61aaced1bb7adb001a76661818b0%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1"></script><script type="text/javascript" nonce="b9918b10c8d8430da4baf49b729" src="//local.adguard.org?ts=1780009151803&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;name=Web%20of%20Trust&amp;type=user-script"></script></head>
+
+    /* 모바일 전용 영화 선택 버튼 레이아웃
+       PC/태블릿: 세로로 긴 카드 5개
+       모바일: 가로로 긴 카드가 세로로 쌓이는 구조 */
+    @media (max-width: 640px) {
+      html,
+      body {
+        overflow: hidden;
+      }
+
+      .future-list {
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 18px;
+        padding: max(28px, env(safe-area-inset-top)) 18px max(96px, env(safe-area-inset-bottom));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .future-title {
+        width: min(92vw, 460px);
+        flex: 0 0 auto;
+        margin: 0 auto;
+        padding-top: 4px;
+      }
+
+      .future-title h2 {
+        font-size: clamp(1.7rem, 8.2vw, 2.55rem) !important;
+        line-height: 1.08;
+        letter-spacing: -0.06em;
+      }
+
+      .future-buttons {
+        width: min(92vw, 460px);
+        height: auto !important;
+        display: grid;
+        grid-template-columns: 1fr !important;
+        gap: 14px;
+        perspective: none;
+        padding-bottom: 12px;
+      }
+
+      .future-buttons .future-btn,
+      .future-btn {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        height: clamp(112px, 28vw, 142px) !important;
+        border-radius: 22px;
+        overflow: visible;
+      }
+
+      .future-btn::before {
+        inset: 0;
+        border-radius: inherit;
+        background-image:
+          linear-gradient(90deg,
+            rgba(0, 0, 0, 0.05) 0%,
+            rgba(0, 0, 0, 0.18) 38%,
+            rgba(0, 0, 0, 0.78) 100%),
+          var(--thumb),
+          linear-gradient(135deg, var(--item-color), #111);
+        background-size: cover;
+        background-position: center;
+      }
+
+      .future-btn::after {
+        inset: -8px;
+        border-radius: 28px;
+        filter: blur(10px);
+      }
+
+      .future-btn-content {
+        left: 42%;
+        right: 12px;
+        top: 10px;
+        bottom: 10px;
+        min-height: 0 !important;
+        height: auto;
+        padding: 12px 12px;
+        border-radius: 16px;
+        justify-content: center;
+        align-items: flex-start;
+        text-align: left;
+        gap: 8px;
+        background:
+          linear-gradient(90deg,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(0, 0, 0, 0.72) 52%,
+            rgba(0, 0, 0, 0.88) 100%);
+      }
+
+      .future-btn strong,
+      .future-btn span {
+        text-align: left;
+      }
+
+      .future-btn strong {
+        width: 100%;
+        font-size: clamp(1.05rem, 4.8vw, 1.42rem);
+        line-height: 1.08;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .future-tags {
+        width: 100%;
+        align-items: flex-start;
+        gap: 5px;
+      }
+
+      .future-tag {
+        margin: 0;
+        max-width: 100%;
+        padding: 4px 8px;
+        font-size: clamp(0.68rem, 3.1vw, 0.82rem);
+      }
+
+      .future-buttons:hover .future-btn,
+      .future-buttons:focus-within .future-btn {
+        opacity: 1;
+        filter: none;
+      }
+
+      .future-buttons .future-btn:hover,
+      .future-buttons .future-btn:focus-visible {
+        transform: translateY(-4px) scale(1.015);
+        filter: brightness(1.08) saturate(1.14) contrast(1.04);
+      }
+    }
+
+    @media (max-width: 380px) {
+      .future-list {
+        gap: 14px;
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .future-buttons {
+        width: 94vw;
+        gap: 12px;
+      }
+
+      .future-buttons .future-btn,
+      .future-btn {
+        height: 108px !important;
+      }
+
+      .future-btn-content {
+        left: 39%;
+        right: 9px;
+        top: 9px;
+        bottom: 9px;
+        padding: 10px;
+      }
+
+      .future-tag {
+        font-size: 0.66rem;
+      }
+    }
+
+  </style><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000bb047209a05c21b09279dca5%26fn%3Dindex_mobile_movie_buttons.html%26cd%3Dattachment%26ts%3D494739%26p%3Dfs%26cid%3D1%26sig%3Dfaf21d88c281eb05b42cf667d3ec7948ab048586cf87a0e28cf10823185a4c1c%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
