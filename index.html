@@ -2258,7 +2258,416 @@
       }
     }
 
-  </style><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781069272930&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000341c71f88d83a9aa5968ce42%26fn%3Dindex_mobile_center_scroll_fixed.html%26cd%3Dattachment%26ts%3D494741%26p%3Dfs%26cid%3D1%26sig%3D613f000cc8b80bd14d7595ecf59f6f1dbc7676117bfc525adca76eae20c38f9a%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781069272930&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+
+    /* =========================================================
+       MOBILE MASTER CENTERING FIX
+       모바일 화면 전체 중앙 정렬 최종 보정
+       - 기존 모바일 CSS 충돌을 마지막에서 강하게 정리
+       - 100vw 대신 100dvw 기준으로 오른쪽 쏠림 방지
+       - 좌우 스크롤 제거, 모든 주요 UI 중앙 정렬
+       ========================================================= */
+    @media (max-width: 640px) {
+      html,
+      body {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+      }
+
+      body {
+        position: relative !important;
+      }
+
+      .app {
+        width: 100dvw !important;
+        max-width: 100dvw !important;
+        min-width: 0 !important;
+        height: 100dvh !important;
+        min-height: 100dvh !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        overflow-x: hidden !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+      }
+
+      .home,
+      .stage,
+      .future-list,
+      .result-scene,
+      .movie-info {
+        left: 0 !important;
+        right: 0 !important;
+        width: 100dvw !important;
+        max-width: 100dvw !important;
+        min-width: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        transform: none;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+      }
+
+      .home {
+        width: min(88dvw, 430px) !important;
+        max-width: min(88dvw, 430px) !important;
+        text-align: center !important;
+        justify-self: center !important;
+      }
+
+      .stage {
+        position: fixed !important;
+        inset: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+
+      .stage > div {
+        width: min(88dvw, 430px) !important;
+        max-width: min(88dvw, 430px) !important;
+        min-width: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        transform: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+      }
+
+      .text-box,
+      .text-box.single-line-title,
+      .text-box.future-question-line,
+      .sub-text,
+      .sub-text.single-line {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+      }
+
+      .text-box.single-line-title,
+      .text-box.future-question-line {
+        white-space: normal !important;
+        word-break: keep-all !important;
+      }
+
+      .choice-row {
+        width: min(84dvw, 340px) !important;
+        max-width: min(84dvw, 340px) !important;
+        margin: 30px auto 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: center !important;
+        gap: 14px !important;
+        align-self: center !important;
+        transform: none !important;
+      }
+
+      .choice-row .choice-btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+      }
+
+      .stage.modern-preview {
+        inset: 0 !important;
+        width: 100dvw !important;
+        max-width: 100dvw !important;
+        padding:
+          max(28px, env(safe-area-inset-top))
+          0
+          max(104px, env(safe-area-inset-bottom)) !important;
+      }
+
+      .stage.modern-preview > div {
+        width: min(88dvw, 430px) !important;
+        max-width: min(88dvw, 430px) !important;
+        min-height: 100dvh !important;
+        height: auto !important;
+        margin: 0 auto !important;
+        transform: none !important;
+        gap: 18px !important;
+      }
+
+      .stage.modern-preview .current-image {
+        width: min(88dvw, 430px) !important;
+        max-width: min(88dvw, 430px) !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9 !important;
+        max-height: 42vh !important;
+        margin: 0 auto !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+      }
+
+      .stage.modern-preview .text-box.image-choice-caption,
+      .stage.modern-preview .sub-text.single-line {
+        width: min(88dvw, 430px) !important;
+        max-width: min(88dvw, 430px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .future-list {
+        position: fixed !important;
+        inset: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 18px !important;
+        padding:
+          max(28px, env(safe-area-inset-top))
+          0
+          max(104px, env(safe-area-inset-bottom)) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+
+      .future-title {
+        width: min(88dvw, 430px) !important;
+        max-width: min(88dvw, 430px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 0 !important;
+        text-align: center !important;
+      }
+
+      .future-title h2 {
+        width: 100% !important;
+        max-width: 100% !important;
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        font-size: clamp(1.65rem, 8vw, 2.45rem) !important;
+        line-height: 1.1 !important;
+      }
+
+      .future-buttons {
+        width: min(88dvw, 430px) !important;
+        max-width: min(88dvw, 430px) !important;
+        height: auto !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 0 0 28px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 18px !important;
+        overflow: visible !important;
+      }
+
+      .future-buttons .future-btn,
+      .future-btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        height: auto !important;
+        min-height: 190px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        flex: 0 0 auto !important;
+        box-sizing: border-box !important;
+      }
+
+      .future-btn-content {
+        right: 12px !important;
+        left: auto !important;
+        width: 54% !important;
+        max-width: 54% !important;
+        top: 14px !important;
+        bottom: 14px !important;
+        margin: 0 !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+      }
+
+      .result-scene {
+        position: fixed !important;
+        inset: 0 !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+        background-color: #000 !important;
+      }
+
+      .result-panel {
+        left: 50% !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: max(96px, env(safe-area-inset-bottom)) !important;
+        width: min(88dvw, 430px) !important;
+        max-width: min(88dvw, 430px) !important;
+        margin: 0 !important;
+        transform: translateX(-50%) translateY(28px) !important;
+        box-sizing: border-box !important;
+      }
+
+      .result-panel.active {
+        transform: translateX(-50%) translateY(0) !important;
+      }
+
+      .movie-info {
+        position: fixed !important;
+        inset: 0 !important;
+        display: grid !important;
+        place-items: start center !important;
+        padding:
+          max(28px, env(safe-area-inset-top))
+          0
+          max(190px, calc(env(safe-area-inset-bottom) + 172px)) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+      }
+
+      .movie-info-grid {
+        width: min(88dvw, 430px) !important;
+        max-width: min(88dvw, 430px) !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-bottom: max(150px, calc(env(safe-area-inset-bottom) + 132px)) !important;
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 28px !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+      }
+
+      .movie-poster {
+        width: min(72dvw, 320px) !important;
+        max-width: min(72dvw, 320px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .movie-copy,
+      .movie-detail-block,
+      .movie-copy h2,
+      .movie-copy .movie-concept,
+      .movie-detail-block p {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+      }
+
+      .movie-detail-block p,
+      .movie-copy .movie-concept {
+        overflow-wrap: break-word !important;
+        word-break: keep-all !important;
+      }
+
+      .movie-detail-block:last-of-type {
+        margin-bottom: max(130px, calc(env(safe-area-inset-bottom) + 112px)) !important;
+      }
+
+      .ott-list {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 18px 0 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 14px !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+      }
+
+      .ott-list li {
+        flex: 0 0 auto !important;
+      }
+
+      .back-btn,
+      .refresh-btn,
+      .next-btn {
+        width: 64px !important;
+        height: 64px !important;
+        z-index: 60 !important;
+      }
+
+      .back-btn {
+        left: 22px !important;
+        right: auto !important;
+        bottom: max(22px, env(safe-area-inset-bottom)) !important;
+      }
+
+      .refresh-btn {
+        right: 22px !important;
+        left: auto !important;
+        bottom: max(22px, env(safe-area-inset-bottom)) !important;
+      }
+
+      .next-btn:not(.back-btn):not(.refresh-btn) {
+        right: 22px !important;
+        left: auto !important;
+        bottom: max(22px, env(safe-area-inset-bottom)) !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .home,
+      .stage > div,
+      .stage.modern-preview > div,
+      .future-title,
+      .future-buttons,
+      .movie-info-grid,
+      .result-panel {
+        width: 88dvw !important;
+        max-width: 88dvw !important;
+      }
+
+      .choice-row {
+        width: 84dvw !important;
+        max-width: 84dvw !important;
+      }
+
+      .future-buttons .future-btn,
+      .future-btn {
+        min-height: 178px !important;
+      }
+
+      .future-btn-content {
+        width: 55% !important;
+        max-width: 55% !important;
+        right: 10px !important;
+      }
+
+      .back-btn {
+        left: 18px !important;
+      }
+
+      .refresh-btn,
+      .next-btn:not(.back-btn):not(.refresh-btn) {
+        right: 18px !important;
+      }
+    }
+
+  </style><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781069272930&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000c408722fadf42101c450a4bb%26fn%3Dindex_mobile_all_centered.html%26cd%3Dattachment%26ts%3D494741%26p%3Dfs%26cid%3D1%26sig%3D05b4168501bde62b7b010601fd194907d13aa339f7944f59167183ef90a31298%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781069272930&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
