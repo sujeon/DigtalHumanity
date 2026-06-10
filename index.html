@@ -1850,7 +1850,100 @@
       }
     }
 
-  </style><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000092287209985508fee4cd8a37%26fn%3Dindex_mobile_no_text_cutoff.html%26cd%3Dattachment%26ts%3D494740%26p%3Dfs%26cid%3D1%26sig%3D6ad4326a21bf1e4dd24a2d6c7be543ce2cbe863e77e787255e8dce612301d1ff%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+
+    /* 모바일 영화 정보 페이지: OTT 아이콘 왼쪽 정렬 + 하단 내비게이션 공간 확보 */
+    @media (max-width: 640px) {
+      .movie-info {
+        overflow-y: auto !important;
+        place-items: start center !important;
+        padding:
+          max(28px, env(safe-area-inset-top))
+          22px
+          max(190px, calc(env(safe-area-inset-bottom) + 172px))
+          22px !important;
+      }
+
+      .movie-info-grid {
+        width: min(92vw, 430px) !important;
+        min-height: 0 !important;
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+        padding-bottom: max(150px, calc(env(safe-area-inset-bottom) + 132px)) !important;
+      }
+
+      .movie-copy {
+        width: 100% !important;
+      }
+
+      .movie-detail-block:last-of-type {
+        margin-bottom: max(120px, calc(env(safe-area-inset-bottom) + 104px)) !important;
+      }
+
+      .ott-list {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 18px 0 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 14px !important;
+      }
+
+      .ott-list li {
+        flex: 0 0 auto !important;
+      }
+
+      .ott-link.icon-only {
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 17px !important;
+      }
+
+      .back-btn,
+      .refresh-btn {
+        bottom: max(22px, env(safe-area-inset-bottom)) !important;
+      }
+
+      .back-btn {
+        left: 24px !important;
+      }
+
+      .refresh-btn {
+        right: 24px !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .movie-info {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+      }
+
+      .movie-info-grid {
+        width: min(90vw, 390px) !important;
+      }
+
+      .ott-list {
+        gap: 12px !important;
+      }
+
+      .ott-link.icon-only {
+        width: 52px !important;
+        height: 52px !important;
+      }
+
+      .back-btn {
+        left: 18px !important;
+      }
+
+      .refresh-btn {
+        right: 18px !important;
+      }
+    }
+
+  </style><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000037607209afea119b6b9927a2%26fn%3Dindex_mobile_ott_left_safe_space.html%26cd%3Dattachment%26ts%3D494740%26p%3Dfs%26cid%3D1%26sig%3D51150f6d9e26146fc391b700864a962b71ce979a596eb1e5407566e3f67ec87e%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
