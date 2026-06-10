@@ -1943,7 +1943,83 @@
       }
     }
 
-  </style><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_0000000037607209afea119b6b9927a2%26fn%3Dindex_mobile_ott_left_safe_space.html%26cd%3Dattachment%26ts%3D494740%26p%3Dfs%26cid%3D1%26sig%3D51150f6d9e26146fc391b700864a962b71ce979a596eb1e5407566e3f67ec87e%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+
+    /* 모바일 현대 풍경 이미지 잘림 방지 */
+    @media (max-width: 640px) {
+      .stage.modern-preview {
+        overflow-y: auto !important;
+        padding:
+          max(28px, env(safe-area-inset-top))
+          18px
+          max(104px, env(safe-area-inset-bottom)) !important;
+      }
+
+      .stage.modern-preview > div {
+        width: min(92vw, 430px) !important;
+        height: auto !important;
+        min-height: 100dvh !important;
+        transform: none !important;
+        justify-content: center !important;
+        gap: 18px !important;
+      }
+
+      .stage.modern-preview .current-image {
+        width: min(92vw, 430px) !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9 !important;
+        max-height: 42vh !important;
+        border-radius: 22px !important;
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center center !important;
+        background-color: #050505 !important;
+        margin: 0 !important;
+      }
+
+      .stage.modern-preview .text-box.image-choice-caption {
+        max-width: min(92vw, 430px) !important;
+        white-space: normal !important;
+        word-break: keep-all !important;
+        font-size: clamp(1.15rem, 5vw, 1.75rem) !important;
+        line-height: 1.24 !important;
+        padding: 12px 20px !important;
+        border-radius: 22px !important;
+        text-align: center !important;
+      }
+
+      .stage.modern-preview .sub-text.single-line {
+        max-width: min(92vw, 430px) !important;
+        white-space: normal !important;
+        word-break: keep-all !important;
+        line-height: 1.45 !important;
+        padding: 12px 18px !important;
+        border-radius: 18px !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .stage.modern-preview > div {
+        width: 90vw !important;
+        gap: 16px !important;
+      }
+
+      .stage.modern-preview .current-image {
+        width: 90vw !important;
+        max-height: 38vh !important;
+      }
+
+      .stage.modern-preview .text-box.image-choice-caption {
+        max-width: 90vw !important;
+        font-size: clamp(1.05rem, 5vw, 1.45rem) !important;
+      }
+
+      .stage.modern-preview .sub-text.single-line {
+        max-width: 90vw !important;
+        font-size: 0.82rem !important;
+      }
+    }
+
+  </style><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000e42072098edf53141c47cb27%26fn%3Dindex_mobile_modern_image_fixed.html%26cd%3Dattachment%26ts%3D494740%26p%3Dfs%26cid%3D1%26sig%3D83706256e95cded778d7cd67886452673f0aa009d9f1ad1917126cac06595899%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
