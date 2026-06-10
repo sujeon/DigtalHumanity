@@ -2019,7 +2019,52 @@
       }
     }
 
-  </style><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000e42072098edf53141c47cb27%26fn%3Dindex_mobile_modern_image_fixed.html%26cd%3Dattachment%26ts%3D494740%26p%3Dfs%26cid%3D1%26sig%3D83706256e95cded778d7cd67886452673f0aa009d9f1ad1917126cac06595899%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781060620160&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+
+    /* 모바일 현대 풍경 선택지: 도시/가정/학교 버튼 세로 정렬 */
+    @media (max-width: 640px) {
+      .choice-row {
+        width: min(86vw, 340px) !important;
+        margin: 30px auto 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: center !important;
+        gap: 14px !important;
+      }
+
+      .choice-row .choice-btn {
+        width: 100% !important;
+        min-width: 0 !important;
+        padding: 17px 24px !important;
+        border-radius: 22px !important;
+        text-align: center !important;
+        font-size: clamp(1rem, 4.2vw, 1.22rem) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+          0 14px 34px rgba(0, 0, 0, 0.22) !important;
+      }
+
+      .choice-row .choice-btn:hover,
+      .choice-row .choice-btn:focus-visible {
+        transform: translateY(-2px) scale(1.015) !important;
+        background: rgba(255, 255, 255, 0.18) !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .choice-row {
+        width: 88vw !important;
+        gap: 12px !important;
+      }
+
+      .choice-row .choice-btn {
+        padding: 15px 20px !important;
+        border-radius: 20px !important;
+      }
+    }
+
+  </style><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781069272930&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000268c720ba4b6d5dfab3fd91d%26fn%3Dindex_mobile_choice_vertical.html%26cd%3Dattachment%26ts%3D494741%26p%3Dfs%26cid%3D1%26sig%3Dd978a44933357cc4aa468eef0fd6e0c20bd5ec8f3bb1437f5c5c826a3b3402e7%26v%3D0&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0&amp;stealth=1&amp;st-wrtc&amp;st-push&amp;st-loc&amp;st-dnt"></script><script type="text/javascript" nonce="b5dd90a1b6204c7785364a17e4c" src="//local.adguard.org?ts=1781069272930&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
 <body>
   <main class="app" aria-live="polite">
     <section id="home" class="home">
